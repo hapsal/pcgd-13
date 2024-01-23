@@ -17,7 +17,7 @@ func _process(delta):
 		block_spawn_timer = 0.0
 
 func spawn_block_at(location:Vector2) -> void:
-	var new_block = block_types[randi() % (block_types.size() - 1)].instance()
+	var new_block = block_types[randi() % (block_types.size())].instance()
 	add_child(new_block)
 	new_block.transform.origin = location
 	return 
