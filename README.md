@@ -5,7 +5,7 @@
 
 #### Start with master:
 
-git checkout master
+git checkout main
 
 #### Get latest changes:  
 
@@ -25,8 +25,6 @@ git commit -m "feat: new feature x"
 
 git fetch origin
 
-git rebase origin/master
+git rebase origin/main
 
 git push --set-upstream origin feature/new-feature
-
-New branch is added and can be viewed at https://github.com/hapsal/igdt-g16/pulls before pushing to master branch just in case of any conflicts.
