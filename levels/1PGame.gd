@@ -1,40 +1,37 @@
 extends Node
 
-export(String, DIR) var blocks_directory
-var block_types:Array
+var screen_height
+var block_manager
+var player_cursor
+var camera:Camera2D
+export(bool) var spawn_blocks
 var block_spawn_timer = 0.0
+var tower_height = 0
+var active_block:Block
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	block_types = load_block_types()
-	print(block_types)
+	screen_height = get_viewport().get_visible_rect().size.y
+	block_manager = $BlockManager
+	camera = $Camera2D
+	player_cursor = $PlayerCursor
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	tower_height = block_manager.get_tower_height()
 	block_spawn_timer += delta
-	if block_spawn_timer >= 1.0:
-		spawn_block_at($PlayerCursor.transform.origin)
-		block_spawn_timer = 0.0
-
-func spawn_block_at(location:Vector2) -> void:
-	var new_block = block_types[randi() % (block_types.size())].instance()
-	add_child(new_block)
-	new_block.transform.origin = location
-	return 
+	if not active_block or active_block.is_colliding_with_another_object():
+		active_block = block_manager.spawn_block_at(player_cursor.position)
+	update_camera()
+	update_cursor()
+	
+	
 
 
+func update_camera() -> void:
+	camera.position.y = lerp(camera.position.y, -tower_height - screen_height/2 + 50, 0.02)
+	var zoom_value = max(min(1+(tower_height/screen_height),2),1)
+	camera.zoom = lerp(camera.zoom, Vector2(zoom_value, zoom_value), 0.05)
 
-
-func load_block_types() -> Array:
-	var types:Array
-	var dir = Directory.new()
-	dir.open(blocks_directory)
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	while file_name != "":
-		if file_name.get_extension() == "tscn":
-			var packed_scene = load(blocks_directory + "/" + file_name)
-			types.append(packed_scene)
-		file_name = dir.get_next()
-	dir.list_dir_end()
-	return types
+func update_cursor() -> void:
+	player_cursor.position.y = lerp(player_cursor.position.y, camera.get_camera_screen_center().y - screen_height*0.5*camera.zoom.y + 50, 1)
