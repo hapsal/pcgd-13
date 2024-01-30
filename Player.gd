@@ -2,7 +2,7 @@ extends Area2D
 
 export var speed = 400 # The players move speed
 var screen_size 
-
+export(float, 0, 400, 1) var horizontal_movement_limit
 func _ready():
 	screen_size = get_viewport_rect().size
 	
@@ -26,3 +26,4 @@ func _process(delta):
 	#	$AnimatedSprite2D.stop()
 	
 	position += velocity * delta
+	position.x = clamp(position.x, -horizontal_movement_limit, horizontal_movement_limit)

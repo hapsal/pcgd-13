@@ -22,6 +22,7 @@ spawn_blocks = true
 [node name="PlayerCursor" type="Area2D" parent="."]
 position = Vector2( 0, -450 )
 script = ExtResource( 1 )
+horizontal_movement_limit = 160.0
 
 [node name="CursorSprite" type="Sprite" parent="PlayerCursor"]
 texture = ExtResource( 10 )
@@ -43,3 +44,11 @@ texture = ExtResource( 3 )
 position = Vector2( 8, -270 )
 current = true
 script = ExtResource( 5 )
+
+[node name="Height" type="Label" parent="."]
+anchor_top = 10.0
+anchor_bottom = 10.0
+margin_left = -405.0
+margin_top = -498.0
+margin_right = -319.0
+margin_bottom = -455.0

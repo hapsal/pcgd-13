@@ -24,14 +24,18 @@ func _process(delta):
 		active_block = block_manager.spawn_block_at(player_cursor.position)
 	update_camera()
 	update_cursor()
-	
-	
+	update_label()
+
+func update_label():
+	var label_node = $Height  # Replace "Label" with the actual name of your Label node
+	label_node.text = "Tower Height: " + str(round(tower_height))
+	label_node.rect_position.y = lerp(player_cursor.position.y, camera.get_camera_screen_center().y - screen_height*0.5*camera.zoom.y + 50, 1)
 
 
 func update_camera() -> void:
 	camera.position.y = lerp(camera.position.y, -tower_height - screen_height/2 + 50, 0.02)
 	var zoom_value = max(min(1+(tower_height/screen_height),2),1)
-	camera.zoom = lerp(camera.zoom, Vector2(zoom_value, zoom_value), 0.05)
+	#camera.zoom = lerp(camera.zoom, Vector2(zoom_value, zoom_value), 0.05)
 
 func update_cursor() -> void:
 	player_cursor.position.y = lerp(player_cursor.position.y, camera.get_camera_screen_center().y - screen_height*0.5*camera.zoom.y + 50, 1)
