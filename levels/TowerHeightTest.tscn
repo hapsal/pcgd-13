@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://levels/1PGame.gd" type="Script" id=2]
 [ext_resource path="res://sprites/base.png" type="Texture" id=3]
 [ext_resource path="res://BlockManager.tscn" type="PackedScene" id=4]
+[ext_resource path="res://levels/Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://sprites/default_player_cursor.png" type="Texture" id=10]
 [ext_resource path="res://CursorSprite.gd" type="Script" id=11]
 
@@ -41,3 +42,4 @@ texture = ExtResource( 3 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 8, -270 )
 current = true
+script = ExtResource( 5 )
