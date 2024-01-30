@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="pcgd-13"
-run/main_scene="res://levels/TestLevel.tscn"
+run/main_scene="res://levels/1PGame.tscn"
 config/icon="res://icon.png"
 
 [display]
@@ -84,8 +84,8 @@ rotate_counter_clockwise={
 
 [physics]
 
+common/physics_fps=120
 common/enable_pause_aware_picking=true
-2d/default_gravity=200
 
 [rendering]
 

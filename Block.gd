@@ -1,3 +1,4 @@
+tool
 extends RigidBody2D
 class_name Block, "res://editor_tools/icons/Block.svg"
 
@@ -5,13 +6,13 @@ var collision_objects:Array
 var rotation_accumulator: float = 0.0
 
 func _process(delta):
-	#self.rotation = rotation_accumulator
 	pass
 	
 func _ready():
 	set_contact_monitor(true)
 	contacts_reported = 10
 	collision_objects = get_collision_objects()
+	continuous_cd = CCD_MODE_CAST_RAY
 	
 func is_colliding_with_another_object() -> bool:
 	return not get_colliding_bodies().empty()
@@ -30,4 +31,3 @@ func get_collision_objects() -> Array:
 func rotate_block(degrees: float) -> void:
 	rotation_accumulator += degrees
 	rotate(deg2rad(degrees))
-
