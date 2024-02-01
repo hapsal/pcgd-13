@@ -16,10 +16,11 @@ func _ready():
 	height_label = $HUD/HeightLabel
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	update_camera()
 	update_player()
 	update_label()
+	$Sprite.position.y = -tower_height
 	
 	tower_height = block_manager.get_tower_height()
 	if not player.active_block or player.active_block.is_colliding_with_another_object():
