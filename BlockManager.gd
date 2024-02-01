@@ -3,12 +3,10 @@ extends Node2D
 export(String, DIR) var blocks_directory = "res://blocks"
 var block_types:Array
 var blocks_container
-var tower_height_measurer
 
 func _ready():
 	block_types = load_block_types()
 	blocks_container = $BlocksContainer
-	tower_height_measurer = $TowerHeightMeasurer
 
 func spawn_block_at(location:Vector2) -> Block:
 	var new_block = block_types[randi() % (block_types.size())].instance()
