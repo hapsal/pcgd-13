@@ -6,6 +6,7 @@ export(float) var rotation_speed = 200
 export(float, 0, 400, 1) var horizontal_movement_limit = 200
 var cursor_sprite:Sprite
 var active_block:Block
+var my_tower:Tower
 
 func _ready():
 	position.y = -vertical_distance_above_tower
