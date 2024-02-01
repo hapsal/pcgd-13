@@ -31,6 +31,10 @@ window/size/height=540
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
+[global]
+
+collision=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
@@ -81,6 +85,10 @@ rotate_counter_clockwise={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":81,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_2="blocks"
 
 [physics]
 
