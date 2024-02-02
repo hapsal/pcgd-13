@@ -17,12 +17,12 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "BlockGraph",
 "language": "GDScript",
-"path": "res://BlockGraph.gd"
+"path": "res://scripts/BlockGraph.gd"
 }, {
 "base": "Area2D",
 "class": "Tower",
 "language": "GDScript",
-"path": "res://Tower.gd"
+"path": "res://scripts/Tower.gd"
 } ]
 _global_script_class_icons={
 "Block": "res://editor_tools/icons/Block.svg",
