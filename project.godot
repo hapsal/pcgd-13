@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "RigidBody2D",
 "class": "Block",
 "language": "GDScript",
-"path": "res://Block.gd"
+"path": "res://scripts/Block.gd"
 }, {
 "base": "Reference",
 "class": "BlockGraph",
@@ -34,7 +34,7 @@ _global_script_class_icons={
 
 config/name="pcgd-13"
 run/main_scene="res://levels/1PGame.tscn"
-config/icon="res://icon.png"
+config/icon="res://sprites/icon.png"
 
 [display]
 
