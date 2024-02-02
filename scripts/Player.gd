@@ -5,7 +5,7 @@ export(float) var move_speed = 400
 export(float) var rotation_speed = 200
 export(float, 0, 400, 1) var horizontal_movement_limit = 200
 export(float) var block_drop_speed = 100
-export(float) var fast_block_drop_speed = 200
+export(float) var fast_block_drop_speed = 300
 var cursor_sprite:Sprite
 var active_block:Block setget set_active_block, get_active_block
 var my_tower:Tower
