@@ -4,13 +4,13 @@ class_name Block, "res://editor_tools/icons/Block.svg"
 
 var collision_objects:Array
 var rotation_accumulator: float = 0.0
+var currently_touching:Array
 	
 func _ready():
 	set_contact_monitor(true)
 	contacts_reported = 10
 	collision_objects = get_collision_objects()
 	continuous_cd = CCD_MODE_CAST_RAY
-	set_collision_layer_bit(1, true) # Blocks layer
 
 func is_colliding_with_another_object() -> bool:
 	return not get_colliding_bodies().empty()
