@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://BlockManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/default_player_cursor.png" type="Texture" id=2]
@@ -8,6 +8,13 @@
 [ext_resource path="res://scripts/Player.gd" type="Script" id=7]
 [ext_resource path="res://scripts/HeightLabel.gd" type="Script" id=8]
 [ext_resource path="res://Tower.tscn" type="PackedScene" id=9]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 
 [node name="1PGame" type="Node"]
 script = ExtResource( 5 )
@@ -44,3 +51,22 @@ margin_bottom = -163.08
 text = "Placeholder"
 clip_text = true
 script = ExtResource( 8 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+margin_left = 324.0
+margin_top = -470.0
+margin_right = 474.0
+margin_bottom = -270.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="NextBlockLabel" type="Label" parent="CanvasLayer"]
+margin_left = 325.0
+margin_top = -484.0
+margin_right = 399.0
+margin_bottom = -469.0
+text = "Next block:"
+align = 1
+valign = 1

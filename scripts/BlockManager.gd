@@ -3,15 +3,22 @@ extends Node2D
 export(String, DIR) var blocks_directory = "res://blocks"
 var block_types:Array
 var blocks_container
+var random_index:int
 
 func _ready():
 	block_types = load_block_types()
 	blocks_container = $BlocksContainer
-
+	random_index = randi() % block_types.size()
+	
 func spawn_block_at(location:Vector2) -> Block:
-	var new_block = block_types[randi() % (block_types.size())].instance()
+	random_index = randi() % block_types.size()
+	var new_block = block_types[random_index].instance()
 	blocks_container.add_child(new_block)
 	new_block.transform.origin = location
+	return new_block
+	#var new_block = block_types[randi() % (block_types.size())].instance()
+	#blocks_container.add_child(new_block)
+	#new_block.transform.origin = location
 	return new_block
 
 func get_tower_height() -> float:
@@ -51,3 +58,20 @@ func load_block_types() -> Array:
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	return types
+
+
+func show_next_block_preview():
+	remove_last_block_preview()
+	
+	#var random_index = randi() % block_types.size() 
+	var next_block: Block = block_types[random_index].instance()
+	next_block.gravity_scale = 0.0
+	next_block.set_mode(RigidBody2D.MODE_STATIC)
+	next_block.global_position = Vector2(400, -350)
+	add_child(next_block)
+	
+func remove_last_block_preview():
+	for child in get_children():
+		if child is Block:
+			remove_child(child)
+			break
