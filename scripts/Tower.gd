@@ -8,21 +8,25 @@ var block_graph:BlockGraph.Graph
 var owning_player:Node
 var height:float
 var peak:Vector2
+var bee
+
+func _ready():
+	base = $Base
+	bee = $Bee
+	bee.play("Buzz")
+	tower_area = $TowerArea
+	block_graph = BlockGraph.Graph.new(base)
+	
 
 func _process(_delta):
 	block_tower = get_tower()
 	peak = get_peak()
 	height = -peak.y
+	bee.position.y = lerp(bee.position.y, -height, 0.3)
 	update()
 
 func _draw():
-	draw_line(Vector2(-tower_area.shape.extents.x, peak.y), Vector2(tower_area.shape.extents.x, peak.y), Color.coral, 5)
-
-func _ready():
-	base = $Base
-	tower_area = $TowerArea
-	block_graph = BlockGraph.Graph.new(base)
-	#assert(collision_layer != 0)
+	draw_line(Vector2(-tower_area.shape.extents.x, bee.position.y), Vector2(tower_area.shape.extents.x, bee.position.y), Color.coral, 4)
 
 func get_tower() -> Array:
 	var tower = []

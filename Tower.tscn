@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Tower.gd" type="Script" id=1]
 [ext_resource path="res://sprites/base.png" type="Texture" id=2]
+[ext_resource path="res://sprites/bee.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 300, 1000 )
@@ -11,6 +12,22 @@ friction = 2.0
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 150, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "Buzz",
+"speed": 5.0
+} ]
 
 [node name="Tower" type="Area2D"]
 collision_layer = 0
@@ -29,6 +46,13 @@ shape = SubResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="Base"]
 texture = ExtResource( 2 )
+
+[node name="Bee" type="AnimatedSprite" parent="."]
+position = Vector2( -333, 0 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 9 )
+animation = "Buzz"
+offset = Vector2( 0, -5 )
 
 [connection signal="body_entered" from="." to="." method="_on_Tower_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Tower_body_exited"]
