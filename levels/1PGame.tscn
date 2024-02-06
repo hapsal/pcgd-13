@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://BlockManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/default_player_cursor.png" type="Texture" id=2]
+[ext_resource path="res://DefaultTheme.theme" type="Theme" id=3]
 [ext_resource path="res://scripts/Camera2D.gd" type="Script" id=4]
 [ext_resource path="res://levels/1PGame.gd" type="Script" id=5]
 [ext_resource path="res://scripts/CursorSprite.gd" type="Script" id=6]
@@ -41,6 +42,6 @@ margin_left = 35.0
 margin_top = -177.08
 margin_right = 35.0
 margin_bottom = -163.08
+theme = ExtResource( 3 )
 text = "Placeholder"
-clip_text = true
 script = ExtResource( 8 )
