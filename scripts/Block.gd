@@ -3,7 +3,6 @@ extends RigidBody2D
 class_name Block, "res://editor_tools/icons/Block.svg"
 
 var collision_objects:Array
-var currently_touching:Array
 	
 func _ready():
 	set_contact_monitor(true)
