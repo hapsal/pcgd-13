@@ -3,7 +3,6 @@ extends RigidBody2D
 class_name Block, "res://editor_tools/icons/Block.svg"
 
 var collision_objects:Array
-var rotation_accumulator: float = 0.0
 var currently_touching:Array
 	
 func _ready():
@@ -25,6 +24,11 @@ func get_collision_objects() -> Array:
 			assert(child is CollisionPolygon2D,wrong_collision_object_message % name)
 	return collision_objects
 	
-func rotate_block(degrees: float) -> void:
-	rotation_accumulator += degrees
+func rotate(degrees: float) -> void:
 	rotate(deg2rad(degrees))
+
+func set_rotation(degrees: float) -> void:
+	rotation = deg2rad(degrees)
+
+func get_rotation() -> float:
+	return rad2deg(rotation)
