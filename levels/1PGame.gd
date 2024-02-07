@@ -25,7 +25,7 @@ func _process(delta):
 	update_player()
 	update_label()
 	
-	if not player.active_block or player.active_block.is_colliding_with_another_object():
+	if not player.active_block or player.active_block.is_colliding_with_another_object() or player.active_block.global_position.y > 1000:
 		player.set_active_block(block_manager.spawn_block_at(player.position))
 
 func update_label() -> void:

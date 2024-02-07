@@ -10,6 +10,10 @@ func _ready():
 	collision_objects = get_collision_objects()
 	continuous_cd = CCD_MODE_CAST_RAY
 
+func _process(_delta):
+	if global_position.y > 1500:
+		queue_free()
+
 func is_colliding_with_another_object() -> bool:
 	return not get_colliding_bodies().empty()
 
