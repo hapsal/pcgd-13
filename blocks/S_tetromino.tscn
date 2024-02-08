@@ -3,14 +3,15 @@
 [ext_resource path="res://sprites/blocks/S_tetromino.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Block.gd" type="Script" id=2]
 
-
 [node name="S_tetromino" type="RigidBody2D"]
+rotation = -1.57079
 mass = 10.0
 continuous_cd = 1
 contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
+difficulty = 4
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

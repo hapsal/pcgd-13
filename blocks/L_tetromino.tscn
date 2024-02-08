@@ -10,6 +10,7 @@ contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
+difficulty = 3
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

@@ -3,7 +3,6 @@
 [ext_resource path="res://sprites/blocks/square_tetromino.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Block.gd" type="Script" id=2]
 
-
 [node name="square_tetromino" type="RigidBody2D"]
 mass = 10.0
 continuous_cd = 1

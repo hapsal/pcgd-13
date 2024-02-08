@@ -3,7 +3,11 @@ extends RigidBody2D
 class_name Block, "res://editor_tools/icons/Block.svg"
 
 var collision_objects:Array
-	
+
+# Individual blocks should change these!!
+export(int, 0, 10) var rarity # 0 (default) is msot common, bigger numbr == less common
+export(int, 0, 10) var difficulty # How difficult is it to build with this block? 0 is easiest
+
 func _ready():
 	set_contact_monitor(true)
 	contacts_reported = 10
