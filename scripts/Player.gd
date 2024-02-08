@@ -11,7 +11,8 @@ const slam_block_drop_speed = 1000.0
 const snap_rotation_cooldown = 0.15
 var cursor_sprite:Sprite
 var active_block:Block setget set_active_block
-var my_tower:Tower
+var tower:Tower
+var upcoming_block_queue = []
 var controls:Controls
 var seconds_since_snap_rotation = snap_rotation_cooldown
 var slamming_block = false
