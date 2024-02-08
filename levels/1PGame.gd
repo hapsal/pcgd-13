@@ -9,8 +9,11 @@ var tower:Tower
 var block_preview_sprite
 var block_types:Array
 var block_randomizer
+var time_label
+var timer
+var remaining_time
+var height_level = 1
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_height = get_viewport().get_visible_rect().size.y
 	block_types = load_block_types()
@@ -19,18 +22,22 @@ func _ready():
 	height_label = $HUD/HeightLabel
 	block_preview_sprite = $HUD/BlockPreview/SpriteContainer/Sprite
 	tower = $Tower
+	time_label = $HUD/TimeLabel
+	timer = $Timer
+	timer.start()
 	player.tower = tower
 	block_manager = $BlockManager
 	block_randomizer = BlockRandomizer.new(block_types)
-	assert(camera and player and height_label and block_preview_sprite and tower and block_manager and block_types.size() > 0)
 	while player.upcoming_block_queue.size() < 5:
 		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(_delta):
 	update_camera(player.tower.height)
 	update_player(player.tower.height)
 	update_height_label(player.tower.height)
-	
+	update_time_label()
+	check_add_time(player.tower.height)
+
 	if not player.active_block or player.active_block.is_colliding_with_another_object() or player.active_block.global_position.y > 1000:
 		player.set_active_block(block_manager.spawn_block(player.upcoming_block_queue.pop_front(), player.position))
 		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
@@ -44,6 +51,10 @@ func update_block_preview() -> void:
 
 func update_height_label(tower_height) -> void:
 	height_label.update_height(tower_height)
+
+func update_time_label() -> void:
+	remaining_time = max(0, timer.time_left)
+	time_label.update_time(remaining_time)
 
 func update_camera(tower_height) -> void:
 	var zoom_value = max(min(1+(tower_height/screen_height)*1.3,3),2)
@@ -66,3 +77,19 @@ func load_block_types() -> Array:
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	return types
+
+func add_time(): 
+	remaining_time += 60
+	timer.start(remaining_time)	
+	update_time_label()
+	print("Time Added")
+
+func check_add_time(tower_height) -> void:
+	var level = int(tower_height / 400)
+	if level >= height_level:
+		add_time()
+		height_level += 1
+
+func _on_Timer_timeout():
+	get_tree().paused = true
+	timer.stop()
