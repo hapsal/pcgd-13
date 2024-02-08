@@ -27,6 +27,7 @@ func _process(delta):
 	
 	if not player.active_block or player.active_block.is_colliding_with_another_object() or player.active_block.global_position.y > 1000:
 		player.set_active_block(block_manager.spawn_block_at(player.position))
+		block_manager.show_next_block_preview()
 
 func update_label() -> void:
 	height_label.update_height(tower_height)
