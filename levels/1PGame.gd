@@ -6,7 +6,7 @@ var player
 var camera:Camera2D
 var height_label:Label
 var tower:Tower
-var block_preview_sprite
+var block_preview
 var block_types:Array
 var block_randomizer
 var time_label
@@ -20,7 +20,7 @@ func _ready():
 	camera = $Camera2D
 	player = $Player
 	height_label = $HUD/HeightLabel
-	block_preview_sprite = $HUD/BlockPreview/SpriteContainer/Sprite
+	block_preview = $HUD/BlockPreview
 	tower = $Tower
 	time_label = $HUD/TimeLabel
 	timer = $Timer
@@ -47,7 +47,7 @@ func _process(_delta):
 
 func update_block_preview() -> void:
 	var temp_instance = player.upcoming_block_queue[0].instance()
-	block_preview_sprite.texture = temp_instance.get_node("Sprite").texture
+	block_preview.update_preview_block(temp_instance)
 	temp_instance.queue_free()
 
 func update_height_label(tower_height) -> void:
