@@ -31,6 +31,7 @@ func _ready():
 	block_randomizer = BlockRandomizer.new(block_types)
 	while player.upcoming_block_queue.size() < 5:
 		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
+	$BackgroundMusic.play(0)
 
 func _process(_delta):
 	update_camera(player.tower.height)

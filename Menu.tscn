@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://PressStart2P-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=2]
 [ext_resource path="res://levels/1PGame.tscn" type="PackedScene" id=3]
+[ext_resource path="res://music/cute beepers.wav" type="AudioStream" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 125
@@ -143,6 +144,10 @@ custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 3 )
 text = "Quit Game"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true
 
 [connection signal="button_up" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/PlayButton" to="." method="_on_PlayButton_button_up"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer3/QuitButton" to="." method="_on_QuitButton_button_up"]
