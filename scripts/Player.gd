@@ -1,5 +1,6 @@
 extends Node2D
 
+const NEW_BLOCK_COOLDOWN = 0.5
 const vertical_distance_above_tower = 400.0
 const move_speed = 400.0
 const dash_speed = 10000.0
@@ -16,6 +17,7 @@ var upcoming_block_queue = []
 var controls:Controls
 var seconds_since_snap_rotation = snap_rotation_cooldown
 var slamming_block = false
+var time_since_new_block = NEW_BLOCK_COOLDOWN
 
 func _ready():
 	position.y = -vertical_distance_above_tower
@@ -27,7 +29,7 @@ func _ready():
 	
 func _process(delta):
 	controls.poll()
-	
+	time_since_new_block += delta
 	match controls.get_state("movement"):
 		Controls.ControlState.PRESSED, Controls.ControlState.DOUBLE_TAP:
 			position.x += controls.get_direction("movement") * move_speed * delta
@@ -43,17 +45,23 @@ func _process(delta):
 				active_block.rotation_degrees += controls.get_direction("rotation") * rotation_speed * delta
 	seconds_since_snap_rotation += delta
 	
+	var drop_motion = Vector2.ZERO
 	if slamming_block:
-		active_block.global_position.y += slam_drop_speed * delta
+		drop_motion.y += slam_drop_speed * delta
 	else:
 		match controls.get_state("move_down"):
 			Controls.ControlState.PRESSED:
-				active_block.global_position.y += fast_drop_speed * delta
+				drop_motion.y += fast_drop_speed * delta
 			Controls.ControlState.DOUBLE_TAP:
 				slamming_block = true
 			_:
-				active_block.global_position.y += default_drop_speed * delta
-	
+				drop_motion.y += default_drop_speed * delta
+				
+	var result = Physics2DTestMotionResult.new()
+	active_block.test_motion(drop_motion, false, 0.00, result)
+	if result.collider:
+		drop_motion = lerp(drop_motion, result.motion, 0.9)
+	active_block.global_position.y  += drop_motion.y
 
 	
 func move_to_height(var tower_height:float) -> void:
@@ -62,12 +70,16 @@ func move_to_height(var tower_height:float) -> void:
 	cursor_sprite.position.y += (previous_position_y - position.y)
 
 func set_active_block(var new_active_block:Block) -> Block:
+	time_since_new_block = 0.0
 	if active_block:
 		enable_gravity_for_active_block()
 	active_block = new_active_block
 	disable_gravity_for_active_block()
 	slamming_block = false
 	return active_block
+
+func block_spawn_cooldown_ready() -> bool:
+	return time_since_new_block >= NEW_BLOCK_COOLDOWN
 
 var active_block_true_gravity_scale:float
 func enable_gravity_for_active_block():

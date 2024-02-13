@@ -3,7 +3,7 @@ class_name Block, "res://editor_tools/icons/Block.svg"
 
 const DESPAWN_BELOW_THIS_Y_COORD = 1500
 
-var colliding_blocks = []
+var colliding_blocks = [] setget , get_colliding_blocks
 var effects = []
 var joints = {}
 
@@ -15,7 +15,6 @@ func _ready():
 	set_meta("is_block", true)
 	set_contact_monitor(true)
 	contacts_reported = 10
-	continuous_cd = CCD_MODE_CAST_RAY
 
 func _process(_delta):
 	update_colliding_blocks()
@@ -30,6 +29,7 @@ func update_colliding_blocks():
 			colliding_blocks.append(body)
 
 func get_contiguous_blocks(var contiguous_blocks:Array = [], including_self = false) -> Array:
+	update_colliding_blocks()
 	contiguous_blocks.append(self)
 	for body in colliding_blocks:
 		if not contiguous_blocks.has(body):
@@ -60,6 +60,10 @@ func get_jointed_to_blocks() -> Array:
 	for joint in joints:
 		jointed_to_blocks.append(joint)
 	return jointed_to_blocks
+
+func get_colliding_blocks() -> Array:
+	update_colliding_blocks()
+	return colliding_blocks
 
 func is_colliding_with_another_block() -> bool:
 	return not colliding_blocks.empty()
