@@ -15,11 +15,6 @@ _global_script_classes=[ {
 "path": "res://scripts/Block.gd"
 }, {
 "base": "Reference",
-"class": "BlockGraph",
-"language": "GDScript",
-"path": "res://scripts/BlockGraph.gd"
-}, {
-"base": "Reference",
 "class": "BlockRandomizer",
 "language": "GDScript",
 "path": "res://scripts/BlockRandomizer.gd"
@@ -27,7 +22,12 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "Controls",
 "language": "GDScript",
-"path": "res://Controls.gd"
+"path": "res://scripts/Controls.gd"
+}, {
+"base": "Block",
+"class": "TheIcer",
+"language": "GDScript",
+"path": "res://blocks/the_icer.gd"
 }, {
 "base": "Area2D",
 "class": "Tower",
@@ -36,9 +36,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Block": "res://editor_tools/icons/Block.svg",
-"BlockGraph": "",
 "BlockRandomizer": "",
 "Controls": "",
+"TheIcer": "",
 "Tower": ""
 }
 
@@ -51,7 +51,7 @@ config/icon="res://sprites/icon.png"
 [display]
 
 window/stretch/mode="2d"
-window/stretch/aspect="keep"
+window/stretch/aspect="expand"
 
 [global]
 
@@ -118,6 +118,8 @@ rotate_counter_clockwise={
 common/physics_fps=120
 common/enable_pause_aware_picking=true
 2d/physics_engine="GodotPhysics"
+2d/default_gravity=200
+2d/default_linear_damp=1.0
 
 [rendering]
 

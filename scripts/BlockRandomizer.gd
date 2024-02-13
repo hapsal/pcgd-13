@@ -21,7 +21,7 @@ func get_block_type_for(player):
 		
 		adjusted_rarity = clamp(int(adjusted_rarity), 1, 10)
 		# The magic numbers are from fitting a 3rd order polynomial for [(0,100),(1,75),(9,2),(10,1)]
-		var frequency = int(100 - 27.53889*adjusted_rarity + 2.625*pow(adjusted_rarity, 2) - 0.08611111*pow(adjusted_rarity, 3))
+		var frequency = int(round(100 - 27.53889*adjusted_rarity + 2.625*pow(adjusted_rarity, 2) - 0.08611111*pow(adjusted_rarity, 3)))
 		rng_table[table_position + frequency] = type
 		table_position += frequency
 	return pick_from_weighted_rng_table(rng_table, table_position)

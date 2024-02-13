@@ -1,25 +1,22 @@
 extends Area2D
 class_name Tower 
 
-var block_tower:Array
-var base:Node2D
+var tower_origin_blocks:Array
+var blocks_in_tower:Array
 var tower_area:CollisionShape2D
-var block_graph:BlockGraph.Graph
 var owning_player:Node
 var height:float
 var peak:Vector2
 var bee
 
 func _ready():
-	base = $Base
+	tower_origin_blocks.append($Base)
 	bee = $Bee
 	bee.play("Buzz")
 	tower_area = $TowerArea
-	block_graph = BlockGraph.Graph.new(base)
 	
-
 func _process(_delta):
-	block_tower = get_tower()
+	update_blocks_in_tower()
 	peak = get_peak()
 	height = -peak.y
 	bee.position.y = lerp(bee.position.y, -height, 0.3)
@@ -28,36 +25,41 @@ func _process(_delta):
 func _draw():
 	draw_line(Vector2(-tower_area.shape.extents.x, bee.position.y), Vector2(tower_area.shape.extents.x, bee.position.y), Color.coral, 4)
 
-func get_tower() -> Array:
-	var tower = []
-	for contiguous_vertex in block_graph.get_vertex(base).get_contiguous_vertices():
-		if contiguous_vertex.node is Block and contiguous_vertex.node.is_colliding_with_another_object():
-			tower.append(contiguous_vertex.node)
-	return tower
+func update_blocks_in_tower() -> Array:
+	blocks_in_tower.clear()
+	var tower_origins_to_check = tower_origin_blocks
+	for tower_origin in tower_origins_to_check:
+		blocks_in_tower.append(tower_origin)
+		for block in tower_origin.get_contiguous_blocks():
+			if not blocks_in_tower.has(block):
+				blocks_in_tower.append(block)
+				if block.mode == 3:
+					tower_origin_blocks.append(block)
+				# If an origin is contiguous to another origin we don't need to
+				# check it as it's contiguous blocks are a subset of this
+				# origin's contiguous blocks
+				if tower_origins_to_check.has(block):
+					tower_origins_to_check.erase(block)
+	return blocks_in_tower
 
 func get_peak() -> Vector2:
-	var centre_of_highest_block = base.position
-	for block in block_tower:
+	var centre_of_highest_block = Vector2.ZERO
+	for block in blocks_in_tower:
 		block.set_collision_layer_bit(1, true)
 		if centre_of_highest_block.y > block.position.y:
 			centre_of_highest_block = block.position
 	var highest_peak_found = centre_of_highest_block
 	var space_state = get_world_2d().direct_space_state
-	var result = space_state.intersect_ray(Vector2(-tower_area.shape.extents.x, highest_peak_found.y), Vector2(tower_area.shape.extents.x, highest_peak_found.y), [self], 0b10, 1)
+	var result = space_state.intersect_ray(Vector2(-tower_area.shape.extents.x, highest_peak_found.y), Vector2(tower_area.shape.extents.x, highest_peak_found.y), [tower_area], 0b10, 1)
 	while result:
 		highest_peak_found = result["position"]
-		result =  space_state.intersect_ray(Vector2(-tower_area.shape.extents.x, highest_peak_found.y-1), Vector2(tower_area.shape.extents.x, highest_peak_found.y-1), [self], 0b10, 1)
+		result =  space_state.intersect_ray(Vector2(-tower_area.shape.extents.x, highest_peak_found.y-1), Vector2(tower_area.shape.extents.x, highest_peak_found.y-1), [tower_area], 0b10, 1)
 	return highest_peak_found
 
 func _on_Tower_body_entered(body):
-	if body is Block:
-		var vertex = block_graph.add_node_as_vertex(body)
-		body.connect("body_entered", vertex, "connect_node_as_vertex_to_this")
-		body.connect("body_exited", vertex, "disconnect_node_as_vertex_from_this")
+	if body is Block and not blocks_in_tower.has(body):
+		blocks_in_tower.append(body)
 
 func _on_Tower_body_exited(body):
-	var vertex = block_graph.get_vertex(body)
-	body.disconnect("body_entered", vertex, "connect_node_as_vertex_to_this")
-	body.disconnect("body_exited", vertex, "disconnect_node_as_vertex_from_this")
-	block_graph.disconnect_all_vertices_from(vertex)
-	block_graph.erase_vertex(vertex)
+	if body is Block and blocks_in_tower.has(body):
+		blocks_in_tower.erase(body)

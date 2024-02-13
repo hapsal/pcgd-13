@@ -5,9 +5,9 @@ const move_speed = 400.0
 const dash_speed = 10000.0
 const rotation_speed = 200.0
 const horizontal_movement_limit = 200.0
-const block_drop_speed = 100.0
-const fast_block_drop_speed = 300.0
-const slam_block_drop_speed = 1000.0
+const default_drop_speed = 100.0
+const fast_drop_speed = 300.0
+const slam_drop_speed = 1000.0
 const snap_rotation_cooldown = 0.15
 var cursor_sprite:Sprite
 var active_block:Block setget set_active_block
@@ -44,15 +44,17 @@ func _process(delta):
 	seconds_since_snap_rotation += delta
 	
 	if slamming_block:
-		active_block.global_position.y += slam_block_drop_speed * delta
+		active_block.global_position.y += slam_drop_speed * delta
 	else:
 		match controls.get_state("move_down"):
 			Controls.ControlState.PRESSED:
-				active_block.global_position.y += fast_block_drop_speed * delta
+				active_block.global_position.y += fast_drop_speed * delta
 			Controls.ControlState.DOUBLE_TAP:
 				slamming_block = true
 			_:
-				active_block.global_position.y += block_drop_speed * delta
+				active_block.global_position.y += default_drop_speed * delta
+	
+
 	
 func move_to_height(var tower_height:float) -> void:
 	var previous_position_y = position.y
