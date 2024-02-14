@@ -1,7 +1,7 @@
 extends Node2D
 
 const NEW_BLOCK_COOLDOWN = 0.5
-const vertical_distance_above_tower = 400.0
+const vertical_distance_above_tower = 600.0
 const move_speed = 400.0
 const dash_speed = 10000.0
 const rotation_speed = 200.0
