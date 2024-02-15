@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/blocks/ufo.png" type="Texture" id=1]
+[ext_resource path="res://blocks/ufo.gd" type="Script" id=2]
+
+[node name="ufo" type="RigidBody2D"]
+mass = 100.0
+continuous_cd = 1
+contacts_reported = 10
+contact_monitor = true
+can_sleep = false
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -0.5 )
+vframes = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 1.5, 1.5 )
+polygon = PoolVector2Array( -27.3333, -22.6667, 27.3333, -22.6667, 30.6667, -21.3333, 32, -18.6667, 32, -1.33333, 68, -1.33333, 86, 1.33333, 96, 4.66667, 96, 12, 80, 16.6667, 58, 20, 27.3333, 22, -20.6667, 22, -58, 20, -83.3333, 16, -96, 12, -96, 5.33333, -87.3333, 1.33333, -64, -1.33333, -32, -1.33333, -32, -18.6667, -30.6667, -21.3333 )

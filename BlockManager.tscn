@@ -2,6 +2,5 @@
 
 [ext_resource path="res://scripts/BlockManager.gd" type="Script" id=1]
 
-
 [node name="BlockManager" type="Node2D"]
 script = ExtResource( 1 )

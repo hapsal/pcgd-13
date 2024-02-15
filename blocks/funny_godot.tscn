@@ -15,7 +15,7 @@ contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
 rarity = 5
-difficulty = 2
+difficulty = 4
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

@@ -11,6 +11,7 @@ var block_types:Array
 var block_randomizer
 var time_label
 var timer
+var effect_bus
 var remaining_time
 var height_level = 1
 var GameOverScreen
@@ -70,10 +71,12 @@ func _process(_delta):
 	update_time_label()
 	check_add_time(player.tower.height)
 
-	
-	if not player.active_block or player.active_block.is_colliding_with_another_object() or player.active_block.global_position.y > 1000: 
-			player.set_active_block(block_manager.spawn_block(player.upcoming_block_queue.pop_front(), player.position))
-			player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
+	if (not player.active_block
+		or player.active_block.is_colliding_with_another_block()
+		or player.active_block.global_position.y > 1000
+		) and player.block_spawn_cooldown_ready():
+		player.set_active_block(block_manager.spawn_block(player.upcoming_block_queue.pop_front(), player.position))
+		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
 	update_block_preview()
 
 func update_block_preview() -> void:

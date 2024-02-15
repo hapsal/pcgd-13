@@ -1,13 +1,14 @@
 extends Node2D
 
-const vertical_distance_above_tower = 400.0
+const NEW_BLOCK_COOLDOWN = 2.0
+const vertical_distance_above_tower = 600.0
 const move_speed = 400.0
 const dash_speed = 10000.0
 const rotation_speed = 200.0
 const horizontal_movement_limit = 200.0
-const block_drop_speed = 100.0
-const fast_block_drop_speed = 300.0
-const slam_block_drop_speed = 1000.0
+const default_drop_speed = 100.0
+const fast_drop_speed = 300.0
+const slam_drop_speed = 1000.0
 const snap_rotation_cooldown = 0.15
 var cursor_sprite:Sprite
 var active_block:Block setget set_active_block
@@ -16,6 +17,7 @@ var upcoming_block_queue = []
 var controls:Controls
 var seconds_since_snap_rotation = snap_rotation_cooldown
 var slamming_block = false
+var time_since_new_block = NEW_BLOCK_COOLDOWN
 
 func _ready():
 	position.y = -vertical_distance_above_tower
@@ -26,12 +28,21 @@ func _ready():
 	controls.bind_control_axis("rotation", "rotate_counter_clockwise", "rotate_clockwise")
 	
 func _process(delta):
+	time_since_new_block += delta
 	controls.poll()
-	
+	move_player(delta)
+	if active_block:
+		move_active_block(delta)
+		if active_block.colliding_blocks:
+			clear_active_block()
+
+func move_player(delta):
 	match controls.get_state("movement"):
 		Controls.ControlState.PRESSED, Controls.ControlState.DOUBLE_TAP:
 			position.x += controls.get_direction("movement") * move_speed * delta
 	position.x = clamp(position.x, -horizontal_movement_limit, horizontal_movement_limit)
+	
+func move_active_block(delta):
 	active_block.global_position.x = lerp(active_block.global_position.x, global_position.x, 0.5)
 	
 	match controls.get_state("rotation"):
@@ -43,29 +54,44 @@ func _process(delta):
 				active_block.rotation_degrees += controls.get_direction("rotation") * rotation_speed * delta
 	seconds_since_snap_rotation += delta
 	
+	var drop_motion = Vector2.ZERO
 	if slamming_block:
-		active_block.global_position.y += slam_block_drop_speed * delta
+		drop_motion.y += slam_drop_speed * delta
 	else:
 		match controls.get_state("move_down"):
 			Controls.ControlState.PRESSED:
-				active_block.global_position.y += fast_block_drop_speed * delta
+				drop_motion.y += fast_drop_speed * delta
 			Controls.ControlState.DOUBLE_TAP:
 				slamming_block = true
 			_:
-				active_block.global_position.y += block_drop_speed * delta
+				drop_motion.y += default_drop_speed * delta
+	
+	var result = Physics2DTestMotionResult.new()
+	active_block.test_motion(drop_motion, false, 0.00, result)
+	if result.collider:
+		drop_motion = lerp(drop_motion, result.motion, 0.9)
+	active_block.global_position.y  += drop_motion.y
 	
 func move_to_height(var tower_height:float) -> void:
 	var previous_position_y = position.y
 	position.y = -tower_height - vertical_distance_above_tower
 	cursor_sprite.position.y += (previous_position_y - position.y)
 
+func clear_active_block():
+	enable_gravity_for_active_block()
+	active_block = null
+
 func set_active_block(var new_active_block:Block) -> Block:
+	time_since_new_block = 0.0
 	if active_block:
 		enable_gravity_for_active_block()
 	active_block = new_active_block
 	disable_gravity_for_active_block()
 	slamming_block = false
 	return active_block
+
+func block_spawn_cooldown_ready() -> bool:
+	return time_since_new_block >= NEW_BLOCK_COOLDOWN
 
 var active_block_true_gravity_scale:float
 func enable_gravity_for_active_block():

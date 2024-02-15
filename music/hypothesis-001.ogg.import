@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/hypothesis-001.ogg-821f2519af9f38792cada6f3aa783821.oggstr"
+
+[deps]
+
+source_file="res://music/hypothesis-001.ogg"
+dest_files=[ "res://.import/hypothesis-001.ogg-821f2519af9f38792cada6f3aa783821.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
