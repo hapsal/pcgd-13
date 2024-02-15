@@ -5,7 +5,7 @@
 
 [node name="Z_tetromino" type="RigidBody2D"]
 rotation = -1.57079
-mass = 10.0
+mass = 40.0
 continuous_cd = 1
 contacts_reported = 10
 contact_monitor = true

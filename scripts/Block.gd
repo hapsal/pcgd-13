@@ -10,6 +10,7 @@ var joints = {}
 # Individual blocks should change these!!
 export(int, 0, 10) var rarity # 0 (default) is msot common, bigger numbr == less common
 export(int, 0, 10) var difficulty # How difficult is it to build with this block? 0 is easiest
+export(bool) var is_a_locker = false
 
 func _ready():
 	set_meta("is_block", true)

@@ -2,7 +2,7 @@ extends Block
 
 const SIN_PREIOD = 1.0 / (180.0 / PI)
 const BUBBLE_OFFSET_DISTANCE = 32
-const LEVELLING_TORQUE = 3
+const LEVELLING_TORQUE = 2.5
 export(NodePath) var bubble_sprite
 var bubble
 var self_levelling_active = false

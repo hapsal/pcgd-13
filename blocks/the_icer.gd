@@ -21,7 +21,8 @@ func _process(delta):
 				for block in effect_targets:
 					if block.mode == 3:
 						mode = 3
-					block.add_child(FreezeEffect.new())
+					if not block.find_node("FreezeEffect", false, false):
+						block.add_child(FreezeEffect.new())
 				has_procced = true
 			else:
 				proc_timer += delta
@@ -39,7 +40,7 @@ class FreezeEffect extends Node:
 	func _process(delta):
 		var parent = get_parent()
 		for block in parent.get_colliding_blocks():
-			if block and block.find_node("FreezeEffect", false, false):
+			if block.find_node("FreezeEffect", false, false):
 				parent.lock_with(block)
 		if effect_timer >= 0:
 			get_parent().material.set_shader_param("effect_progress", 1.0 - effect_timer)

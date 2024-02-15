@@ -13,7 +13,7 @@ contact_monitor = true
 can_sleep = false
 angular_damp = 20.0
 script = ExtResource( 2 )
-rarity = 6
+rarity = 3
 bubble_sprite = NodePath("Sprite1")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
