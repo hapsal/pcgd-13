@@ -26,12 +26,16 @@ func _draw():
 	draw_line(Vector2(-tower_area.shape.extents.x, bee.position.y), Vector2(tower_area.shape.extents.x, bee.position.y), Color.coral, 4)
 
 func update_blocks_in_tower() -> Array:
+	var bodies_inside_tower_area = get_overlapping_bodies()
+	for body in bodies_inside_tower_area:
+		if body is Block and body.mode == 3 and not tower_origin_blocks.has(body):
+			tower_origin_blocks.append(body)
 	blocks_in_tower.clear()
 	var tower_origins_to_check = tower_origin_blocks
 	for tower_origin in tower_origins_to_check:
 		blocks_in_tower.append(tower_origin)
 		for block in tower_origin.get_contiguous_blocks():
-			if not blocks_in_tower.has(block):
+			if not blocks_in_tower.has(block) and bodies_inside_tower_area.has(block):
 				blocks_in_tower.append(block)
 				if block.mode == 3:
 					tower_origin_blocks.append(block)

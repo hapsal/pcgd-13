@@ -1,6 +1,6 @@
 extends Node2D
 
-const NEW_BLOCK_COOLDOWN = 0.5
+const NEW_BLOCK_COOLDOWN = 2.0
 const vertical_distance_above_tower = 600.0
 const move_speed = 400.0
 const dash_speed = 10000.0
@@ -28,12 +28,21 @@ func _ready():
 	controls.bind_control_axis("rotation", "rotate_counter_clockwise", "rotate_clockwise")
 	
 func _process(delta):
-	controls.poll()
 	time_since_new_block += delta
+	controls.poll()
+	move_player(delta)
+	if active_block:
+		move_active_block(delta)
+		if active_block.colliding_blocks:
+			clear_active_block()
+
+func move_player(delta):
 	match controls.get_state("movement"):
 		Controls.ControlState.PRESSED, Controls.ControlState.DOUBLE_TAP:
 			position.x += controls.get_direction("movement") * move_speed * delta
 	position.x = clamp(position.x, -horizontal_movement_limit, horizontal_movement_limit)
+	
+func move_active_block(delta):
 	active_block.global_position.x = lerp(active_block.global_position.x, global_position.x, 0.5)
 	
 	match controls.get_state("rotation"):
@@ -56,18 +65,21 @@ func _process(delta):
 				slamming_block = true
 			_:
 				drop_motion.y += default_drop_speed * delta
-				
+	
 	var result = Physics2DTestMotionResult.new()
 	active_block.test_motion(drop_motion, false, 0.00, result)
 	if result.collider:
 		drop_motion = lerp(drop_motion, result.motion, 0.9)
 	active_block.global_position.y  += drop_motion.y
-
 	
 func move_to_height(var tower_height:float) -> void:
 	var previous_position_y = position.y
 	position.y = -tower_height - vertical_distance_above_tower
 	cursor_sprite.position.y += (previous_position_y - position.y)
+
+func clear_active_block():
+	enable_gravity_for_active_block()
+	active_block = null
 
 func set_active_block(var new_active_block:Block) -> Block:
 	time_since_new_block = 0.0

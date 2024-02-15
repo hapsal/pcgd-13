@@ -12,7 +12,7 @@ contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
 rarity = 8
-difficulty = 7
+difficulty = 5
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )
