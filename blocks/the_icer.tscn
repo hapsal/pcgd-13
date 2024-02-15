@@ -10,14 +10,14 @@ bounce = 0.5
 extents = Vector2( 161, 25 )
 
 [node name="the_icer" type="RigidBody2D"]
-mass = 5.0
+mass = 50.0
 physics_material_override = SubResource( 2 )
 continuous_cd = 1
 contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
-rarity = 2
+is_a_locker = true
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

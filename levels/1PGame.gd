@@ -21,6 +21,7 @@ var game_over = false
 signal replay_pressed
 
 func _ready():
+	randomize()
 	screen_height = get_viewport().get_visible_rect().size.y
 	block_types = load_block_types()
 	camera = $Camera2D

@@ -84,10 +84,18 @@ script = ExtResource( 3 )
 visible = false
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 120.0
+wait_time = 60.0
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -12.0
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -128
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.129412, 0.129412, 0.129412, 1 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

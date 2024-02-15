@@ -5,13 +5,13 @@
 
 [node name="1968_corollla" type="RigidBody2D"]
 position = Vector2( 7, 0 )
-mass = 100.0
+mass = 300.0
 continuous_cd = 1
 contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
-rarity = 8
+rarity = 4
 difficulty = 5
 
 [node name="Sprite" type="Sprite" parent="."]

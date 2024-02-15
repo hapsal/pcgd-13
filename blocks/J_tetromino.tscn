@@ -4,7 +4,7 @@
 [ext_resource path="res://scripts/Block.gd" type="Script" id=2]
 
 [node name="J_tetromino" type="RigidBody2D"]
-mass = 10.0
+mass = 40.0
 continuous_cd = 1
 contacts_reported = 10
 contact_monitor = true

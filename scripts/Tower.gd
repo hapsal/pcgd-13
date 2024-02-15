@@ -28,7 +28,7 @@ func _draw():
 func update_blocks_in_tower() -> Array:
 	var bodies_inside_tower_area = get_overlapping_bodies()
 	for body in bodies_inside_tower_area:
-		if body is Block and body.mode == 3 and not tower_origin_blocks.has(body):
+		if (body is Block) and (body.mode == 3) and (not tower_origin_blocks.has(body)):
 			tower_origin_blocks.append(body)
 	blocks_in_tower.clear()
 	var tower_origins_to_check = tower_origin_blocks

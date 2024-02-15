@@ -1,7 +1,7 @@
 extends Block
 
 var hover_active = false
-const BLINKING_FPS = 2
+const BLINKING_FPS = 1
 var animation_clock = 0
 var sprite:Sprite
 var animation_clock_reset_time = (1.0 / 60.0) * BLINKING_FPS
