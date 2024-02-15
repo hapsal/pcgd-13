@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://BlockManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,11 @@
 [ext_resource path="res://scripts/HeightLabel.gd" type="Script" id=8]
 [ext_resource path="res://Tower.tscn" type="PackedScene" id=9]
 [ext_resource path="res://levels/GameOverScreen.tscn" type="PackedScene" id=10]
+[ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=11]
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 11 )
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
@@ -17,6 +22,14 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 11 )
 
 [node name="1PGame" type="Node"]
 script = ExtResource( 5 )
@@ -39,26 +52,29 @@ layer = 128
 anchor_top = 0.402
 anchor_right = 0.578
 anchor_bottom = 0.402
-margin_left = 35.0
-margin_top = -177.08
-margin_right = 35.0
-margin_bottom = -163.08
+margin_left = 36.0
+margin_top = -196.0
+margin_right = 35.128
+margin_bottom = -155.0
+custom_fonts/font = SubResource( 2 )
 text = "Placeholder"
 clip_text = true
 script = ExtResource( 8 )
 
 [node name="BlockPreview" type="Panel" parent="HUD"]
 margin_left = 745.0
-margin_top = 54.0
-margin_right = 845.0
-margin_bottom = 129.0
+margin_top = 83.0
+margin_right = 850.0
+margin_bottom = 170.0
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 7 )
 
 [node name="BlockPreviewLabel" type="Label" parent="HUD/BlockPreview"]
-margin_left = 1.0
-margin_top = -14.0
-margin_right = 73.0
+margin_left = -30.0
+margin_top = -37.0
+margin_right = 142.0
+margin_bottom = 1.0
+custom_fonts/font = SubResource( 3 )
 text = "Next block:"
 
 [node name="SpriteContainer" type="Control" parent="HUD/BlockPreview"]
@@ -72,10 +88,11 @@ __meta__ = {
 }
 
 [node name="TimeLabel" type="Label" parent="HUD"]
-margin_left = 37.0
+margin_left = 36.0
 margin_top = 89.0
-margin_right = 110.0
-margin_bottom = 115.0
+margin_right = 323.0
+margin_bottom = 130.0
+custom_fonts/font = SubResource( 4 )
 text = "Remaining Time: "
 clip_text = true
 script = ExtResource( 3 )
