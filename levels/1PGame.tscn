@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://BlockManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Tower.tscn" type="PackedScene" id=9]
 [ext_resource path="res://levels/GameOverScreen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://sfx/hit3.wav" type="AudioStream" id=12]
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
@@ -62,14 +63,16 @@ clip_text = true
 script = ExtResource( 8 )
 
 [node name="BlockPreview" type="Panel" parent="HUD"]
-margin_left = 745.0
-margin_top = 83.0
-margin_right = 850.0
-margin_bottom = 170.0
+margin_left = 832.0
+margin_top = 76.0
+margin_right = 1003.0
+margin_bottom = 179.0
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 7 )
 
 [node name="BlockPreviewLabel" type="Label" parent="HUD/BlockPreview"]
+anchor_left = 0.201
+anchor_right = 0.201
 margin_left = -30.0
 margin_top = -37.0
 margin_right = 142.0
@@ -79,9 +82,9 @@ text = "Next block:"
 
 [node name="SpriteContainer" type="Control" parent="HUD/BlockPreview"]
 anchor_left = 0.5
-anchor_top = 0.513333
+anchor_top = 0.501839
 anchor_right = 0.5
-anchor_bottom = 0.513333
+anchor_bottom = 0.501839
 rect_scale = Vector2( 0.5, 0.5 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -114,5 +117,9 @@ layer = -128
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.129412, 0.129412, 0.129412, 1 )
+
+[node name="HitSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+bus = "HitSfx"
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
