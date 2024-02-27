@@ -130,13 +130,14 @@ func _on_replay_pressed():
 	game_over = false
 
 func _on_Timer_timeout():
-	game_over = true
-	timer.stop()
-	GameOverScreen.set_height(int(player.tower.height))	
-	if player.tower.height > high_height:
+	if not game_over:
+		timer.stop()
+		GameOverScreen.set_height(int(player.tower.height))	
+	if player.tower.height > high_height and not game_over:
 		GameOverScreen.set_highest_height(int(player.tower.height))
 		high_height = int (player.tower.height)
 	save_game()
 	yield(get_tree().create_timer(1.5), "timeout")
 	GameOverScreen.visible = true
+	game_over = true
 	
