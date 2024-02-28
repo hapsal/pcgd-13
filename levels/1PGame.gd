@@ -77,7 +77,6 @@ func _process(_delta):
 	check_add_time(player.tower.height)
 
 	if (not player.active_block
-		or player.active_block.is_colliding_with_another_block()
 		or player.active_block.global_position.y > 1000
 		) and player.block_spawn_cooldown_ready():
 		player.set_active_block(block_manager.spawn_block(player.upcoming_block_queue.pop_front(), player.position))

@@ -36,6 +36,7 @@ volume_db = -24.0
 
 [node name="HitSfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
+volume_db = -12.0
 
 [node name="CheckpointDrawer" type="Node2D" parent="."]
 position = Vector2( 4, -225 )
@@ -44,3 +45,5 @@ script = ExtResource( 13 )
 [node name="Background" parent="." instance=ExtResource( 14 )]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="Background"]
