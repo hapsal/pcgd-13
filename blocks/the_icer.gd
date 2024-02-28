@@ -17,13 +17,13 @@ func _physics_process(delta):
 		effect_targets.erase(self)
 		if effect_targets:
 			if proc_timer >= TIME_BEFORE_EFFECT_PROCS:
-				add_child(FreezeEffect.new())
 				for block in effect_targets:
 					if block.mode == 3:
 						mode = 3
 					if not block.find_node("FreezeEffect", false, false):
 						block.add_child(FreezeEffect.new())
-				has_procced = true
+				if mode == 3:
+					has_procced = true
 			else:
 				proc_timer += delta
 		else:
@@ -41,7 +41,7 @@ class FreezeEffect extends Node:
 	
 	func _physics_process(delta):
 		for block in parent.get_colliding_blocks():
-			if block.find_node("FreezeEffect", false, false):
+			if block != null and block.find_node("FreezeEffect", false, false):
 				parent.lock_with(block)
 		if effect_timer >= 0:
 			get_parent().material.set_shader_param("effect_progress", 1.0 - effect_timer)

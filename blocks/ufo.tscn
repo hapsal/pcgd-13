@@ -10,7 +10,7 @@ contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
-rarity = 4
+rarity = 8
 is_a_locker = true
 
 [node name="Sprite" type="Sprite" parent="."]

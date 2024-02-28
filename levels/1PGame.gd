@@ -13,7 +13,6 @@ var time_label
 var timer
 var effect_bus
 var remaining_time
-var height_level = 1
 var GameOverScreen
 var high_height = 0
 var save_file_path = "user://save_game.dat"
@@ -31,6 +30,7 @@ func _ready():
 	height_label = $HUD/HeightLabel
 	block_preview = $HUD/BlockPreview
 	tower = $Tower
+	tower.owning_player = player
 	time_label = $HUD/TimeLabel
 	timer = $Timer
 	timer.start()
@@ -74,11 +74,10 @@ func _process(_delta):
 	update_player(player.tower.height)
 	update_height_label(player.tower.height)
 	update_time_label()
-	check_add_time(player.tower.height)
 
 	if (not player.active_block
-		or player.active_block.global_position.y > 1000
-		) and player.block_spawn_cooldown_ready():
+			or player.active_block.global_position.y > 1000
+			) and player.block_spawn_cooldown_ready():
 		player.set_active_block(block_manager.spawn_block(player.upcoming_block_queue.pop_front(), player.position))
 		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
 	update_block_preview()
@@ -117,19 +116,15 @@ func load_block_types() -> Array:
 	dir.list_dir_end()
 	return types
 
+func _on_Player_checkpoint_reached(player_that_reached_checkpoint):
+	add_time()
+	player_that_reached_checkpoint.upcoming_block_queue.insert(0, block_randomizer.get_locker_block_for(player))
+
 func add_time(): 
 	remaining_time += 60
 	timer.start(remaining_time)	
 	update_time_label()
 	
-
-func check_add_time(tower_height) -> void:
-	var level = int(tower_height / 400)
-	if level >= height_level:
-		add_time()
-		height_level += 1
-		
-
 func _on_replay_pressed():
 	game_over = false
 
@@ -144,4 +139,3 @@ func _on_Timer_timeout():
 	yield(get_tree().create_timer(1.5), "timeout")
 	GameOverScreen.visible = true
 	game_over = true
-	
