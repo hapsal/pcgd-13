@@ -20,5 +20,5 @@ func draw_checkpoint_line(y: float) -> void:
 # Override _draw method to handle drawing
 func _draw() -> void:
 	# Draw a line at the initial position
-	draw_checkpoint_line(290*height_level)
+	draw_checkpoint_line(400*height_level)
 	
