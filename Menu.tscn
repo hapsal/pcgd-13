@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://PressStart2P-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=2]
 [ext_resource path="res://levels/1PGame.tscn" type="PackedScene" id=3]
 [ext_resource path="res://music/cute beepers.wav" type="AudioStream" id=4]
+[ext_resource path="res://sfx/InteractSound.wav" type="AudioStream" id=5]
 
 [sub_resource type="DynamicFont" id=1]
-size = 125
+size = 200
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
@@ -34,7 +35,45 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="DynamicFont" id=6]
+size = 70
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.415686, 0.164706, 0, 0.490196 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.415686, 0.164706, 0, 0.686275 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.415686, 0.164706, 0, 0.392157 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="DynamicFont" id=11]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 40
+font_data = ExtResource( 1 )
+
 [node name="MainMenu" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 2 )
 mainGameScene = ExtResource( 3 )
 
@@ -43,7 +82,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 color = Color( 1, 0.721569, 0.533333, 1 )
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Menu" type="MarginContainer" parent="."]
 margin_right = 1025.0
 margin_bottom = 600.0
 custom_constants/margin_right = 200
@@ -51,16 +90,16 @@ custom_constants/margin_top = 75
 custom_constants/margin_left = 200
 custom_constants/margin_bottom = 100
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
 margin_left = 200.0
 margin_top = 75.0
 margin_right = 825.0
 margin_bottom = 500.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_top = 42.0
+[node name="Label" type="Label" parent="Menu/VBoxContainer"]
+margin_top = 14.0
 margin_right = 625.0
-margin_bottom = 167.0
+margin_bottom = 195.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = SubResource( 1 )
@@ -68,7 +107,7 @@ text = "Stax"
 align = 1
 valign = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/VBoxContainer"]
 margin_top = 214.0
 margin_right = 625.0
 margin_bottom = 425.0
@@ -77,7 +116,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Menu/VBoxContainer/VBoxContainer"]
 margin_right = 625.0
 margin_bottom = 57.0
 size_flags_horizontal = 3
@@ -85,7 +124,7 @@ size_flags_vertical = 3
 custom_constants/margin_right = 50
 custom_constants/margin_left = 50
 
-[node name="PlayButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
+[node name="PlayButton" type="Button" parent="Menu/VBoxContainer/VBoxContainer/MarginContainer"]
 margin_left = 50.0
 margin_right = 575.0
 margin_bottom = 57.0
@@ -97,9 +136,10 @@ custom_fonts/font = SubResource( 2 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 3 )
+action_mode = 0
 text = "Play"
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Menu/VBoxContainer/VBoxContainer"]
 margin_top = 77.0
 margin_right = 625.0
 margin_bottom = 134.0
@@ -108,7 +148,7 @@ size_flags_vertical = 3
 custom_constants/margin_right = 50
 custom_constants/margin_left = 50
 
-[node name="SettingsButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer2"]
+[node name="SettingsButton" type="Button" parent="Menu/VBoxContainer/VBoxContainer/MarginContainer2"]
 margin_left = 50.0
 margin_right = 575.0
 margin_bottom = 57.0
@@ -122,7 +162,7 @@ custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 3 )
 text = "Settings"
 
-[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="Menu/VBoxContainer/VBoxContainer"]
 margin_top = 154.0
 margin_right = 625.0
 margin_bottom = 211.0
@@ -131,7 +171,7 @@ size_flags_vertical = 3
 custom_constants/margin_right = 50
 custom_constants/margin_left = 50
 
-[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer3"]
+[node name="QuitButton" type="Button" parent="Menu/VBoxContainer/VBoxContainer/MarginContainer3"]
 margin_left = 50.0
 margin_right = 575.0
 margin_bottom = 57.0
@@ -143,11 +183,104 @@ custom_fonts/font = SubResource( 2 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 3 )
+action_mode = 0
 text = "Quit Game"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 autoplay = true
 
-[connection signal="button_up" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/PlayButton" to="." method="_on_PlayButton_button_up"]
-[connection signal="button_up" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer3/QuitButton" to="." method="_on_QuitButton_button_up"]
+[node name="InteractSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Settings" type="Control" parent="."]
+visible = false
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="SettingsLabel" type="Label" parent="Settings"]
+margin_left = 320.0
+margin_top = 32.0
+margin_right = 704.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 6 )
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="ExitButton" type="Button" parent="Settings"]
+margin_left = 320.0
+margin_top = 536.0
+margin_right = 704.0
+margin_bottom = 573.0
+focus_mode = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+text = "Exit"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = -39.0
+margin_right = 192.0
+margin_bottom = 39.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Settings/HBoxContainer"]
+margin_right = 190.0
+margin_bottom = 78.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Master" type="Label" parent="Settings/HBoxContainer/VBoxContainer2"]
+margin_right = 190.0
+margin_bottom = 37.0
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 11 )
+text = "Master"
+
+[node name="Sfx" type="Label" parent="Settings/HBoxContainer/VBoxContainer2"]
+margin_top = 41.0
+margin_right = 190.0
+margin_bottom = 78.0
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 12 )
+text = "Sound Fx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/HBoxContainer"]
+margin_left = 194.0
+margin_top = 10.0
+margin_right = 384.0
+margin_bottom = 78.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Master" type="HSlider" parent="Settings/HBoxContainer/VBoxContainer"]
+margin_right = 190.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="HitSfx" type="HSlider" parent="Settings/HBoxContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 190.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[connection signal="button_up" from="Menu/VBoxContainer/VBoxContainer/MarginContainer/PlayButton" to="." method="_on_PlayButton_button_up"]
+[connection signal="pressed" from="Menu/VBoxContainer/VBoxContainer/MarginContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="button_up" from="Menu/VBoxContainer/VBoxContainer/MarginContainer2/SettingsButton" to="." method="_on_SettingsButton_button_up"]
+[connection signal="pressed" from="Menu/VBoxContainer/VBoxContainer/MarginContainer2/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="button_up" from="Menu/VBoxContainer/VBoxContainer/MarginContainer3/QuitButton" to="." method="_on_QuitButton_button_up"]
+[connection signal="pressed" from="Menu/VBoxContainer/VBoxContainer/MarginContainer3/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="button_up" from="Settings/ExitButton" to="." method="_on_ExitButton_button_up"]
+[connection signal="pressed" from="Settings/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="value_changed" from="Settings/HBoxContainer/VBoxContainer/Master" to="." method="_on_Master_value_changed"]
+[connection signal="value_changed" from="Settings/HBoxContainer/VBoxContainer/HitSfx" to="." method="_on_HitSfx_value_changed"]

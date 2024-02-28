@@ -26,7 +26,7 @@ func _ready():
 	controls.bind_control("move_down")
 	controls.bind_control_axis("movement", "move_left", "move_right")
 	controls.bind_control_axis("rotation", "rotate_counter_clockwise", "rotate_clockwise")
-	
+		
 func _process(delta):
 	time_since_new_block += delta
 	controls.poll()
@@ -81,6 +81,7 @@ func move_to_height(var tower_height:float) -> void:
 func clear_active_block():
 	enable_gravity_for_active_block()
 	active_block = null
+	$"../HitSfx".play()
 
 func set_active_block(var new_active_block:Block) -> Block:
 	time_since_new_block = 0.0

@@ -19,6 +19,8 @@ var high_height = 0
 var save_file_path = "user://save_game.dat"
 var game_over = false
 signal replay_pressed
+var check_point_drawer
+
 
 func _ready():
 	randomize()
@@ -35,12 +37,14 @@ func _ready():
 	player.tower = tower
 	block_manager = $BlockManager
 	GameOverScreen = $HUD/GameOverScreen
+	check_point_drawer = $CheckpointDrawer
 	block_randomizer = BlockRandomizer.new(block_types)
 	while player.upcoming_block_queue.size() < 5:
 		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
 	$BackgroundMusic.play(0)
 	GameOverScreen.connect("replay_pressed", self, "_on_replay_pressed")
-	
+
+
 	# loading high score from file system
 	var save_file = File.new()
 	
@@ -118,25 +122,27 @@ func add_time():
 	remaining_time += 60
 	timer.start(remaining_time)	
 	update_time_label()
-	print("Time Added")
+	
 
 func check_add_time(tower_height) -> void:
 	var level = int(tower_height / 400)
 	if level >= height_level:
 		add_time()
 		height_level += 1
+		
 
 func _on_replay_pressed():
 	game_over = false
 
 func _on_Timer_timeout():
-	game_over = true
-	timer.stop()
-	GameOverScreen.set_height(int(player.tower.height))	
-	if player.tower.height > high_height:
+	if not game_over:
+		timer.stop()
+		GameOverScreen.set_height(int(player.tower.height))	
+	if player.tower.height > high_height and not game_over:
 		GameOverScreen.set_highest_height(int(player.tower.height))
 		high_height = int (player.tower.height)
 	save_game()
 	yield(get_tree().create_timer(1.5), "timeout")
 	GameOverScreen.visible = true
+	game_over = true
 	
