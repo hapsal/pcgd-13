@@ -19,6 +19,7 @@ script = ExtResource( 5 )
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="BlockManager" parent="." instance=ExtResource( 1 )]
+z_index = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 0, -200 )

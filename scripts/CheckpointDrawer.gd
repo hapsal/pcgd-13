@@ -13,9 +13,9 @@ func _process(delta):
 	
 func draw_checkpoint_line(y: float) -> void:
 	var line_width = 800
-	var line_height = 2
+	var line_height = 4
 	var line_position = Vector2(-400, -y)
-	draw_rect(Rect2(line_position, Vector2(line_width, line_height)), Color.green)
+	draw_rect(Rect2(line_position, Vector2(line_width, line_height)), Color.gray)
 
 # Override _draw method to handle drawing
 func _draw() -> void:
