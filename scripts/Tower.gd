@@ -8,12 +8,14 @@ var owning_player:Node
 var height:float
 var peak:Vector2
 var bee
+var background_rect
 
 func _ready():
 	tower_origin_blocks.append($Base)
 	bee = $Bee
 	bee.play("Buzz")
 	tower_area = $TowerArea
+	background_rect = Rect2(tower_area.position - tower_area.shape.extents + Vector2(0, -16), tower_area.shape.extents * 2)
 	
 func _process(_delta):
 	update_blocks_in_tower()
@@ -23,6 +25,7 @@ func _process(_delta):
 	update()
 
 func _draw():
+	draw_rect(background_rect, Color(0,0,0,0.83))
 	draw_line(Vector2(-tower_area.shape.extents.x, bee.position.y), Vector2(tower_area.shape.extents.x, bee.position.y), Color.coral, 4)
 
 func update_blocks_in_tower() -> Array:

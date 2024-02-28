@@ -95,7 +95,7 @@ func update_time_label() -> void:
 func update_camera(tower_height) -> void:
 	var zoom_value = max(min(1+(tower_height/screen_height)*1.3,3),2)
 	camera.zoom = lerp(camera.zoom, Vector2(zoom_value, zoom_value), 0.05)
-	camera.position.y = lerp(camera.position.y, player.position.y + screen_height*0.5*zoom_value, 0.02)
+	camera.position.y = lerp(camera.position.y, player.position.y + screen_height*0.4*zoom_value, 0.02)
 
 func update_player(tower_height) -> void:
 	player.move_to_height(tower_height)

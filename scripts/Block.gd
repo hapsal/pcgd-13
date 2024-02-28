@@ -20,7 +20,7 @@ func _ready():
 		if child is Sprite:
 			child.use_parent_material = true
 
-func _process(_delta):
+func _physics_process(_delta):
 	update_colliding_blocks()
 	if global_position.y > DESPAWN_BELOW_THIS_Y_COORD:
 		queue_free()
