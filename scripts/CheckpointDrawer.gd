@@ -5,7 +5,7 @@ var height_level = 1
 func _ready():
 	tower = get_parent().get_node("Tower")
 	
-func _process(delta):
+func _process(_delta):
 	if tower.height > 400 * height_level:
 		height_level += 1
 		update()

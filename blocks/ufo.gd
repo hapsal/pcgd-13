@@ -9,7 +9,7 @@ var sprite:Sprite
 func _ready():
 	sprite = $Sprite
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if not hover_active:
 		if get_colliding_blocks():
 			mode = 3

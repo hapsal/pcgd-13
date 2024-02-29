@@ -1,18 +1,23 @@
 class_name BlockRandomizer
 
 var types:Dictionary
+var lockers:Array
 
 func _init(block_types:Array):
 	for type in block_types:
 		var type_instance = type.instance()
 		types[type_instance] = type
+		if type_instance.is_a_locker:
+			lockers.append(type)
 	
 func get_block_type_for(player):
 	var rng_table = {}
 	var table_position = 0
 	for type in types:
+		if type.is_a_locker and player.tower.height < 10000:
+			continue
 		var adjusted_rarity = type.rarity
-		if (player.tower.height < 3) and (type.difficulty <= 3):
+		if (player.tower.height < 300) and (type.difficulty <= 3):
 			adjusted_rarity += 4-type.difficulty
 		
 		for i in range(0, player.upcoming_block_queue.size()-1):
@@ -25,6 +30,9 @@ func get_block_type_for(player):
 		rng_table[table_position + frequency] = type
 		table_position += frequency
 	return pick_from_weighted_rng_table(rng_table, table_position)
+		
+func get_locker_block_for(_player):
+	return lockers[randi() % lockers.size()]
 		
 func pick_from_weighted_rng_table(rng_table:Dictionary, highest_frequency:int):
 	var rng = randi() % (highest_frequency + 1)
