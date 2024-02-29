@@ -11,7 +11,7 @@ func _ready():
 	assert(bubble_sprite)
 	bubble = get_node(bubble_sprite)
 	
-func _process(delta):
+func _physics_process(delta):
 	var offset = -sin(global_rotation_degrees * SIN_PREIOD) * BUBBLE_OFFSET_DISTANCE
 	bubble.offset.x = lerp(bubble.offset.x, offset, 0.2)
 	if not self_levelling_active:

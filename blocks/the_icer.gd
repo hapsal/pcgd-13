@@ -10,7 +10,7 @@ var effect_area:Area2D
 func _ready():
 	effect_area = $EffectArea
 
-func _process(delta):
+func _physics_process(delta):
 	if not has_procced:
 		var effect_targets = get_contiguous_blocks()
 		effect_targets.append_array(effect_area.get_overlapping_bodies())
@@ -31,14 +31,15 @@ func _process(delta):
 
 class FreezeEffect extends Node:
 	var effect_timer = 1.0
+	var parent:Block
 	
 	func _ready():
 		name = "FreezeEffect"
-		assert(get_parent() is Block)
-		get_parent().material = FREEZE_EFFECT_MATERIAL
+		parent = get_parent()
+		assert(parent is Block)
+		parent.material = FREEZE_EFFECT_MATERIAL
 	
-	func _process(delta):
-		var parent = get_parent()
+	func _physics_process(delta):
 		for block in parent.get_colliding_blocks():
 			if block.find_node("FreezeEffect", false, false):
 				parent.lock_with(block)

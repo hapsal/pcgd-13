@@ -5,7 +5,7 @@ const vertical_distance_above_tower = 600.0
 const move_speed = 400.0
 const dash_speed = 10000.0
 const rotation_speed = 200.0
-const horizontal_movement_limit = 200.0
+const horizontal_movement_limit = 200.0 #TODO GET RID OF IT
 const default_drop_speed = 100.0
 const fast_drop_speed = 300.0
 const slam_drop_speed = 1000.0
@@ -40,7 +40,8 @@ func move_player(delta):
 	match controls.get_state("movement"):
 		Controls.ControlState.PRESSED, Controls.ControlState.DOUBLE_TAP:
 			position.x += controls.get_direction("movement") * move_speed * delta
-	position.x = clamp(position.x, -horizontal_movement_limit, horizontal_movement_limit)
+	if tower:
+		position.x = clamp(position.x, -tower.tower_area.shape.extents.x, tower.tower_area.shape.extents.x)
 	
 func move_active_block(delta):
 	active_block.global_position.x = lerp(active_block.global_position.x, global_position.x, 0.5)
