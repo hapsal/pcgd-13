@@ -1,46 +1,65 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://PressStart2P-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/GameOverScreen.gd" type="Script" id=2]
+[ext_resource path="res://sfx/InteractSound.wav" type="AudioStream" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 1, 0.721569, 0.533333, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="DynamicFont" id=2]
-size = 56
+size = 125
 outline_color = Color( 0.482353, 0, 0, 1 )
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 36
+size = 45
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=8]
 size = 32
-extra_spacing_top = 8
-extra_spacing_bottom = 8
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.415686, 0.164706, 0, 0.490196 )
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.784314, 0.784314, 0.784314, 0.490196 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.415686, 0.164706, 0, 0.686275 )
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.415686, 0.164706, 0, 0.392157 )
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.376471, 0, 0.580392, 0 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -70,12 +89,14 @@ custom_styles/panel = SubResource( 1 )
 [node name="GameOver" type="Label" parent="Panel"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -252.0
-margin_top = 22.5
-margin_right = 252.0
-margin_bottom = 78.5
+margin_left = -319.5
+margin_top = 19.0
+margin_right = 321.5
+margin_bottom = 133.0
 custom_fonts/font = SubResource( 2 )
 text = "Game Over"
+align = 1
+valign = 1
 
 [node name="HighHeightLabel" type="Label" parent="Panel"]
 anchor_left = 0.5
@@ -83,9 +104,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -264.0
-margin_top = -85.0
+margin_top = -36.0
 margin_right = 276.0
-margin_bottom = -49.0
+margin_bottom = 5.0
 custom_fonts/font = SubResource( 3 )
 text = "Hi-Height: 9999"
 align = 1
@@ -96,27 +117,64 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -212.0
-margin_top = -25.0
+margin_top = 24.0
 margin_right = 220.0
-margin_bottom = 11.0
+margin_bottom = 65.0
 custom_fonts/font = SubResource( 3 )
 text = "Height: 9999"
 align = 1
 
 [node name="Replay" type="Button" parent="Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -111.0
-margin_top = 95.0
-margin_right = 103.0
-margin_bottom = 149.0
-custom_fonts/font = SubResource( 4 )
-custom_styles/hover = SubResource( 5 )
-custom_styles/pressed = SubResource( 6 )
-custom_styles/normal = SubResource( 7 )
+margin_left = 254.5
+margin_top = 290.5
+margin_right = 478.5
+margin_bottom = 332.5
+focus_mode = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
 text = "Replay"
-icon_align = 1
 
+[node name="Quit" type="Button" parent="Panel"]
+margin_left = 494.5
+margin_top = 290.5
+margin_right = 718.5
+margin_bottom = 332.5
+focus_mode = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+text = "Quit"
+
+[node name="Main Menu" type="Button" parent="Panel"]
+margin_left = 14.5
+margin_top = 290.5
+margin_right = 238.5
+margin_bottom = 332.5
+focus_mode = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+text = "Main Menu"
+
+[node name="InteractSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="button_up" from="Panel/Replay" to="." method="_on_Replay_button_up"]
 [connection signal="pressed" from="Panel/Replay" to="." method="_on_Replay_pressed"]
+[connection signal="button_up" from="Panel/Quit" to="." method="_on_Quit_button_up"]
+[connection signal="pressed" from="Panel/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="button_up" from="Panel/Main Menu" to="." method="_on_Main_Menu_button_up"]
+[connection signal="pressed" from="Panel/Main Menu" to="." method="_on_Main_Menu_pressed"]
