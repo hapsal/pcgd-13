@@ -31,11 +31,9 @@ func show_and_hide(first, second):
 func _on_ExitButton_button_up():
 	show_and_hide(menu, settings)
 
-func _on_Master_value_changed(value):
+func _on_Master_value_changed(value: float) -> void:
 	volume(0, value)
 
-func _on_HitSfx_value_changed(value):
-	volume(1, value)
-
-func volume(bus_index, value):
-	AudioServer.set_bus_volume_db(bus_index, value)
+func volume(bus_index: int, value: float) -> void:
+	AudioServer.set_bus_volume_db(bus_index, linear2db(value))
+	AudioServer.set_bus_mute(bus_index, value < 0.01)
