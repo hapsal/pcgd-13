@@ -131,7 +131,10 @@ func _on_replay_pressed():
 func _on_Timer_timeout():
 	if not game_over:
 		timer.stop()
-		GameOverScreen.set_height(int(player.tower.height))	
+		GameOverScreen.set_height(int(player.tower.height))
+
+		player.set_process(false)
+		block_manager.set_process(false)
 	if player.tower.height > high_height and not game_over:
 		GameOverScreen.set_highest_height(int(player.tower.height))
 		high_height = int (player.tower.height)
