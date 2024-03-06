@@ -186,6 +186,7 @@ script = ExtResource( 8 )
 
 [node name="Logotype" type="Sprite" parent="Menu"]
 position = Vector2( 0, -164 )
+rotation = 0.0
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 7 )
 
