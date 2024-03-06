@@ -22,7 +22,7 @@ border_width_bottom = 2
 size = 40
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=10]
 size = 40
 font_data = ExtResource( 6 )
 
@@ -71,12 +71,13 @@ __meta__ = {
 }
 
 [node name="TimeLabel" type="Label" parent="."]
-margin_left = 36.0
-margin_top = 89.0
-margin_right = 323.0
-margin_bottom = 130.0
-custom_fonts/font = SubResource( 4 )
-text = "Remaining Time: "
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -143.5
+margin_right = 143.5
+margin_bottom = 41.0
+custom_fonts/font = SubResource( 10 )
+align = 1
 clip_text = true
 script = ExtResource( 2 )
 

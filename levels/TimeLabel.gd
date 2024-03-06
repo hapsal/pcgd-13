@@ -6,7 +6,7 @@ var seconds
 func update_time(var timer_seconds) -> void:
 	minutes = int(timer_seconds / 60)
 	seconds = int(timer_seconds) % 60
-	text = str(int(minutes)) + "." + str(seconds).pad_zeros(2)
+	text = str(int(minutes)) + ":" + str(seconds).pad_zeros(2)
 
 
 

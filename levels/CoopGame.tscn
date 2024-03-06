@@ -194,6 +194,33 @@ offset = Vector2( 0, -200 )
 current = true
 script = ExtResource( 4 )
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 200.0
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+
+[node name="HitSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -10.0
+pitch_scale = 1.25
+
+[node name="CheckpointDrawer" type="Node2D" parent="."]
+visible = false
+position = Vector2( 4, -225 )
+script = ExtResource( 13 )
+
+[node name="Background" parent="." instance=ExtResource( 14 )]
+offset = Vector2( 4, 2 )
+transform = Transform2D( 1, 0, 0, 1, 4, 2 )
+
+[node name="ColorRect" parent="Background" index="3"]
+margin_left = -4.0
+margin_top = -2.0
+margin_right = -4.0
+margin_bottom = -2.0
+
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 128
 
@@ -240,46 +267,21 @@ __meta__ = {
 }
 
 [node name="TimeLabel" type="Label" parent="HUD"]
-margin_left = 36.0
-margin_top = 89.0
-margin_right = 323.0
-margin_bottom = 130.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -143.5
+margin_right = 143.5
+margin_bottom = 41.0
 custom_fonts/font = SubResource( 10 )
-text = "Remaining Time: "
+align = 1
 clip_text = true
 script = ExtResource( 3 )
 
 [node name="PauseMenu" parent="HUD" instance=ExtResource( 22 )]
 
 [node name="GameOverScreen" parent="HUD" instance=ExtResource( 21 )]
+pause_mode = 2
 visible = false
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 200.0
-
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
-volume_db = -10.0
-
-[node name="HitSfx" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 12 )
-volume_db = -10.0
-pitch_scale = 1.25
-
-[node name="CheckpointDrawer" type="Node2D" parent="."]
-visible = false
-position = Vector2( 4, -225 )
-script = ExtResource( 13 )
-
-[node name="Background" parent="." instance=ExtResource( 14 )]
-offset = Vector2( 4, 2 )
-transform = Transform2D( 1, 0, 0, 1, 4, 2 )
-
-[node name="ColorRect" parent="Background" index="3"]
-margin_left = -4.0
-margin_top = -2.0
-margin_right = -4.0
-margin_bottom = -2.0
 
 [connection signal="body_entered" from="Tower" to="Tower" method="_on_Tower_body_entered"]
 [connection signal="body_exited" from="Tower" to="Tower" method="_on_Tower_body_exited"]
