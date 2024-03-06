@@ -186,14 +186,12 @@ script = ExtResource( 8 )
 
 [node name="Logotype" type="Sprite" parent="Menu"]
 position = Vector2( 0, -164 )
-rotation = -0.00708545
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 7 )
 
 [node name="AnimationTree" type="AnimationTree" parent="Menu"]
 tree_root = SubResource( 22 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/OneShot/active = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Menu"]
