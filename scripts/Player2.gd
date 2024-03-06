@@ -45,7 +45,7 @@ func move_player(delta):
 		Controls.ControlState.PRESSED, Controls.ControlState.DOUBLE_TAP:
 			position.x += controls.get_direction("movement") * move_speed * delta
 	if tower:
-		position.x = clamp(position.x, -tower.tower_area.shape.extents.x, tower.tower_area.shape.extents.x)
+		position.x = clamp(position.x, -tower.tower_area.shape.extents.x + tower.position.x, tower.tower_area.shape.extents.x + tower.position.x)
 	
 func move_active_block(delta):
 	active_block.global_position.x = lerp(active_block.global_position.x, global_position.x, 0.5)

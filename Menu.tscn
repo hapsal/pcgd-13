@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=2]
@@ -9,6 +9,58 @@
 [ext_resource path="res://logotype.png" type="Texture" id=7]
 [ext_resource path="res://Menu.gd" type="Script" id=8]
 [ext_resource path="res://levels/CoopGame.tscn" type="PackedScene" id=9]
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "Text"
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "Wiggle"
+
+[sub_resource type="AnimationNodeOneShot" id=21]
+
+[sub_resource type="AnimationNodeBlendTree" id=22]
+graph_offset = Vector2( -510.052, 115.929 )
+nodes/Animation/node = SubResource( 20 )
+nodes/Animation/position = Vector2( -200, 140 )
+"nodes/Animation 2/node" = SubResource( 19 )
+"nodes/Animation 2/position" = Vector2( -200, 280 )
+nodes/OneShot/node = SubResource( 21 )
+nodes/OneShot/position = Vector2( 40, 140 )
+node_connections = [ "output", 0, "OneShot", "OneShot", 0, "Animation", "OneShot", 1, "Animation 2" ]
+
+[sub_resource type="Animation" id=18]
+resource_name = "Text"
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Menu/Logotype:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.42, 0.56, 0.67, 0.72, 0.77, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.1, 0.1 ), Vector2( 0.25, 0.45 ), Vector2( 0.37, 0.35 ), Vector2( 0.39, 0.39 ), Vector2( 0.37, 0.36 ), Vector2( 0.4, 0.4 ) ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "Wiggle"
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Menu/Logotype:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4, 8.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -1.0, 1.0, -1.0 ]
+}
 
 [sub_resource type="DynamicFont" id=17]
 size = 32
@@ -133,9 +185,22 @@ margin_bottom = 320.0
 script = ExtResource( 8 )
 
 [node name="Logotype" type="Sprite" parent="Menu"]
-position = Vector2( 0, -161 )
+position = Vector2( 0, -164 )
+rotation = -0.0172799
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 7 )
+
+[node name="AnimationTree" type="AnimationTree" parent="Menu"]
+tree_root = SubResource( 22 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/OneShot/active = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Menu"]
+root_node = NodePath("../..")
+autoplay = "Text"
+anims/Text = SubResource( 18 )
+anims/Wiggle = SubResource( 23 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Menu"]
 margin_left = 138.0
