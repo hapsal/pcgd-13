@@ -4,19 +4,19 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/Camera2D.gd" type="Script" id=4]
-[ext_resource path="res://levels/1PGame.gd" type="Script" id=5]
+[ext_resource path="res://levels/Game.gd" type="Script" id=5]
 [ext_resource path="res://music/test3.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Tower.tscn" type="PackedScene" id=9]
 [ext_resource path="res://sfx/hit3.wav" type="AudioStream" id=12]
 [ext_resource path="res://scripts/CheckpointDrawer.gd" type="Script" id=13]
 [ext_resource path="res://Background.tscn" type="PackedScene" id=14]
 
-[node name="1PGame" type="Node"]
+[node name="Game" type="Node"]
 script = ExtResource( 5 )
 
 [node name="Tower" parent="." instance=ExtResource( 9 )]
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
+[node name="Player" parent="." groups=["Players"] instance=ExtResource( 2 )]
 
 [node name="BlockManager" parent="." instance=ExtResource( 1 )]
 z_index = 1
@@ -29,15 +29,15 @@ script = ExtResource( 4 )
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 120.0
+wait_time = 200.0
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-volume_db = -24.0
+volume_db = -10.0
 
 [node name="HitSfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
-volume_db = -18.0
+volume_db = -10.0
 pitch_scale = 1.25
 
 [node name="CheckpointDrawer" type="Node2D" parent="."]
@@ -46,6 +46,14 @@ position = Vector2( 4, -225 )
 script = ExtResource( 13 )
 
 [node name="Background" parent="." instance=ExtResource( 14 )]
+offset = Vector2( 4, 2 )
+transform = Transform2D( 1, 0, 0, 1, 4, 2 )
+
+[node name="ColorRect" parent="Background" index="3"]
+margin_left = -4.0
+margin_top = -2.0
+margin_right = -4.0
+margin_bottom = -2.0
 
 [connection signal="checkpoint_reached" from="Player" to="." method="_on_Player_checkpoint_reached"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

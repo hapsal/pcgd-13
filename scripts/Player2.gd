@@ -22,10 +22,10 @@ func _ready():
 	position.y = -vertical_distance_above_tower
 	cursor_sprite = $CursorSprite
 	controls = Controls.new()
-	controls.bind_control("move_down", "move_down")
-	controls.bind_control_axis("movement", "move_left", "move_right")
-	controls.bind_control_axis("rotation", "rotate_counter_clockwise", "rotate_clockwise")
-		
+	controls.bind_control("move_down", "p2_move_down")
+	controls.bind_control_axis("movement", "p2_move_left", "p2_move_right")
+	controls.bind_control_axis("rotation", "p2_rotate_counter_clockwise", "p2_rotate_clockwise")
+	
 func _process(delta):
 	new_block_cooldown -= delta
 	controls.poll()

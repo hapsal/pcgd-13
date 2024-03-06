@@ -11,7 +11,7 @@ contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
-rarity = 6
+rarity = 7
 difficulty = 3
 
 [node name="Sprite" type="Sprite" parent="."]

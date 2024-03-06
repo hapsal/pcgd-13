@@ -8,5 +8,6 @@
 script = ExtResource( 2 )
 
 [node name="CursorSprite" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
 texture = ExtResource( 3 )
 script = ExtResource( 1 )

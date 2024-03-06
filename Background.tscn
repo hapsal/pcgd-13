@@ -44,4 +44,8 @@ stretch_mode = 2
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -227.0
+margin_top = -132.0
+margin_right = 225.0
+margin_bottom = 95.0
 color = Color( 0, 0, 0, 0.843137 )

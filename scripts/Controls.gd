@@ -11,8 +11,8 @@ enum ControlState {
 	DOUBLE_TAP,
 }
 
-func bind_control(action:String):
-	controls[action] = VirtualControl.new(action)
+func bind_control(name:String, action:String):
+	controls[name] = VirtualControl.new(action)
 
 func bind_control_axis(axis_name:String, action1:String, action2:String):
 	controls[axis_name] = VirtualAxisControl.new(action1, action2)

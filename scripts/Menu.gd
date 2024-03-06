@@ -2,6 +2,7 @@ extends Node2D
 onready var menu = $Menu
 onready var settings = $Settings
 export var mainGameScene : PackedScene
+export var coopGameScene : PackedScene
 
 func _on_PlayButton_pressed():
 	$InteractSfx.play()
@@ -17,6 +18,9 @@ func _on_ExitButton_pressed():
 
 func _on_PlayButton_button_up():
 	get_tree().change_scene(mainGameScene.resource_path)
+
+func _on_2PlayerButton_button_up():
+	get_tree().change_scene(coopGameScene.resource_path)
 
 func _on_SettingsButton_button_up():
 	show_and_hide(settings, menu)
@@ -37,3 +41,4 @@ func _on_Master_value_changed(value: float) -> void:
 func volume(bus_index: int, value: float) -> void:
 	AudioServer.set_bus_volume_db(bus_index, linear2db(value))
 	AudioServer.set_bus_mute(bus_index, value < 0.01)
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=2]
@@ -7,6 +7,14 @@
 [ext_resource path="res://sfx/InteractSound.wav" type="AudioStream" id=5]
 [ext_resource path="res://Background.tscn" type="PackedScene" id=6]
 [ext_resource path="res://logotype.png" type="Texture" id=7]
+[ext_resource path="res://Menu.gd" type="Script" id=8]
+[ext_resource path="res://levels/CoopGame.tscn" type="PackedScene" id=9]
+
+[sub_resource type="DynamicFont" id=17]
+size = 32
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
@@ -113,31 +121,49 @@ bg_color = Color( 1, 1, 1, 0.784314 )
 pause_mode = 2
 script = ExtResource( 2 )
 mainGameScene = ExtResource( 3 )
+coopGameScene = ExtResource( 9 )
 
 [node name="Background" parent="." instance=ExtResource( 6 )]
 
 [node name="Menu" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 512.0
+margin_top = 320.0
+margin_right = 512.0
+margin_bottom = 320.0
+script = ExtResource( 8 )
 
 [node name="Logotype" type="Sprite" parent="Menu"]
-position = Vector2( 512, 192 )
-scale = Vector2( 0.438889, 0.445313 )
+position = Vector2( 0, -161 )
+scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 7 )
 
+[node name="RichTextLabel" type="RichTextLabel" parent="Menu"]
+margin_left = 138.0
+margin_top = 77.0
+margin_right = 386.0
+margin_bottom = 124.0
+custom_fonts/normal_font = SubResource( 17 )
+bbcode_enabled = true
+bbcode_text = "[shake rate=10.0 level=2 connected=0][rainbow freq=0.4 sat=0.6 val=1] <- NEW[/rainbow][/shake]"
+text = " <- NEW"
+scroll_active = false
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="Menu"]
-margin_left = 272.0
-margin_top = 368.0
-margin_right = 752.0
-margin_bottom = 568.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -174.0
+margin_right = 174.0
+margin_bottom = 248.0
 rect_pivot_offset = Vector2( -440, -150 )
 size_flags_horizontal = 3
 size_flags_vertical = 10
 custom_constants/separation = 20
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu/VBoxContainer2"]
-margin_right = 480.0
-margin_bottom = 53.0
+margin_right = 348.0
+margin_bottom = 47.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 50
@@ -145,8 +171,8 @@ custom_constants/margin_left = 50
 
 [node name="PlayButton" type="Button" parent="Menu/VBoxContainer2/MarginContainer"]
 margin_left = 50.0
-margin_right = 430.0
-margin_bottom = 53.0
+margin_right = 298.0
+margin_bottom = 47.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -158,12 +184,37 @@ custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 3 )
 action_mode = 0
-text = "Play"
+text = "  Singleplayer  "
+
+[node name="MarginContainer4" type="MarginContainer" parent="Menu/VBoxContainer2"]
+margin_top = 67.0
+margin_right = 348.0
+margin_bottom = 114.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="2PButton" type="Button" parent="Menu/VBoxContainer2/MarginContainer4"]
+margin_left = 50.0
+margin_right = 298.0
+margin_bottom = 47.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 3 )
+action_mode = 0
+text = "2-Player"
 
 [node name="MarginContainer2" type="MarginContainer" parent="Menu/VBoxContainer2"]
-margin_top = 73.0
-margin_right = 480.0
-margin_bottom = 126.0
+margin_top = 134.0
+margin_right = 348.0
+margin_bottom = 181.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 50
@@ -171,8 +222,8 @@ custom_constants/margin_left = 50
 
 [node name="SettingsButton" type="Button" parent="Menu/VBoxContainer2/MarginContainer2"]
 margin_left = 50.0
-margin_right = 430.0
-margin_bottom = 53.0
+margin_right = 298.0
+margin_bottom = 47.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -186,9 +237,9 @@ custom_styles/normal = SubResource( 3 )
 text = "Settings"
 
 [node name="MarginContainer3" type="MarginContainer" parent="Menu/VBoxContainer2"]
-margin_top = 146.0
-margin_right = 480.0
-margin_bottom = 200.0
+margin_top = 201.0
+margin_right = 348.0
+margin_bottom = 248.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 50
@@ -196,8 +247,8 @@ custom_constants/margin_left = 50
 
 [node name="QuitButton" type="Button" parent="Menu/VBoxContainer2/MarginContainer3"]
 margin_left = 50.0
-margin_right = 430.0
-margin_bottom = 54.0
+margin_right = 298.0
+margin_bottom = 47.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -293,8 +344,14 @@ autoplay = true
 [node name="InteractSfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 514, 301 )
+current = true
+
 [connection signal="button_up" from="Menu/VBoxContainer2/MarginContainer/PlayButton" to="." method="_on_PlayButton_button_up"]
 [connection signal="pressed" from="Menu/VBoxContainer2/MarginContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="button_up" from="Menu/VBoxContainer2/MarginContainer4/2PButton" to="." method="_on_2PlayerButton_button_up"]
+[connection signal="pressed" from="Menu/VBoxContainer2/MarginContainer4/2PButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="button_up" from="Menu/VBoxContainer2/MarginContainer2/SettingsButton" to="." method="_on_SettingsButton_button_up"]
 [connection signal="pressed" from="Menu/VBoxContainer2/MarginContainer2/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="button_up" from="Menu/VBoxContainer2/MarginContainer3/QuitButton" to="." method="_on_QuitButton_button_up"]

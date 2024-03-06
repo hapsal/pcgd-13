@@ -4,7 +4,7 @@ class_name Tower
 var tower_origin_blocks:Array
 var blocks_in_tower:Array
 var tower_area:CollisionShape2D
-var owning_player
+var owning_players = []
 var height:float
 var peak:Vector2
 var bee
@@ -23,8 +23,9 @@ func _process(_delta):
 	update_blocks_in_tower()
 	peak = get_peak()
 	if peak.y <= checkpoint.position.y:
-		owning_player.new_checkpoint_reached()
-		update_checkpoint_height(owning_player.checkpoint)
+		for player in owning_players:
+			player.new_checkpoint_reached()
+		update_checkpoint_height(owning_players[0].checkpoint)
 	height = -peak.y
 	bee.position.y = lerp(bee.position.y, -height, 0.3)
 	update()
@@ -71,7 +72,7 @@ func get_peak() -> Vector2:
 	return highest_peak_found
 
 func update_checkpoint_height(checkpoint_number):
-	checkpoint.position.y -= 1000 + 100 * checkpoint_number
+	checkpoint.position.y -= 500 + 200 * checkpoint_number
 
 func _on_Tower_body_entered(body):
 	if body is Block and not blocks_in_tower.has(body):

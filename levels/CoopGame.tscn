@@ -1,0 +1,286 @@
+[gd_scene load_steps=41 format=2]
+
+[ext_resource path="res://BlockManager.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://levels/TimeLabel.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Camera2D.gd" type="Script" id=4]
+[ext_resource path="res://levels/Game.gd" type="Script" id=5]
+[ext_resource path="res://music/test3.ogg" type="AudioStream" id=6]
+[ext_resource path="res://scripts/CursorSprite.gd" type="Script" id=7]
+[ext_resource path="res://sprites/default_player_cursor.png" type="Texture" id=8]
+[ext_resource path="res://scripts/Tower.gd" type="Script" id=9]
+[ext_resource path="res://scripts/Player2.gd" type="Script" id=10]
+[ext_resource path="res://scripts/Base.gd" type="Script" id=11]
+[ext_resource path="res://sfx/hit3.wav" type="AudioStream" id=12]
+[ext_resource path="res://scripts/CheckpointDrawer.gd" type="Script" id=13]
+[ext_resource path="res://Background.tscn" type="PackedScene" id=14]
+[ext_resource path="res://sprites/base.png" type="Texture" id=15]
+[ext_resource path="res://sprites/bee.png" type="Texture" id=16]
+[ext_resource path="res://sprites/checkpoint.png" type="Texture" id=17]
+[ext_resource path="res://sprites/tutorial/UO_rotate.png" type="Texture" id=18]
+[ext_resource path="res://scripts/HeightLabel.gd" type="Script" id=19]
+[ext_resource path="res://scripts/BlockPreview.gd" type="Script" id=20]
+[ext_resource path="res://levels/GameOverScreen.tscn" type="PackedScene" id=21]
+[ext_resource path="res://PauseMenu.tscn" type="PackedScene" id=22]
+[ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=23]
+[ext_resource path="res://sprites/tutorial/JL_move.png" type="Texture" id=24]
+[ext_resource path="res://sprites/tutorial/UO_snap.png" type="Texture" id=25]
+[ext_resource path="res://sprites/tutorial/K_drop.png" type="Texture" id=26]
+[ext_resource path="res://sprites/tutorial/QE_rotate.png" type="Texture" id=27]
+[ext_resource path="res://sprites/tutorial/AD_move.png" type="Texture" id=28]
+[ext_resource path="res://sprites/tutorial/QE_snap.png" type="Texture" id=29]
+[ext_resource path="res://sprites/tutorial/S_drop.png" type="Texture" id=30]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 300, 1e+07 )
+
+[sub_resource type="PhysicsMaterial" id=5]
+friction = 2.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 150, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 16 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "Buzz",
+"speed": 5.0
+} ]
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 23 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 23 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 40
+font_data = ExtResource( 23 )
+
+[node name="CoopGame" type="Node"]
+script = ExtResource( 5 )
+gamemode = 1
+
+[node name="Tower" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource( 9 )
+
+[node name="TowerArea" type="CollisionShape2D" parent="Tower"]
+position = Vector2( 0, -1e+07 )
+shape = SubResource( 4 )
+
+[node name="Checkpoint" type="Sprite" parent="Tower"]
+position = Vector2( -353, -1000 )
+texture = ExtResource( 17 )
+offset = Vector2( 0, -3 )
+
+[node name="Base" type="RigidBody2D" parent="Tower"]
+physics_material_override = SubResource( 5 )
+script = ExtResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tower/Base"]
+shape = SubResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="Tower/Base"]
+texture = ExtResource( 15 )
+
+[node name="Bee" type="AnimatedSprite" parent="Tower"]
+position = Vector2( -333, 0 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 9 )
+animation = "Buzz"
+offset = Vector2( 0, -5 )
+
+[node name="Tutorial" type="Node2D" parent="Tower"]
+position = Vector2( 0, -400 )
+scale = Vector2( 1.2, 1.2 )
+
+[node name="LeftTop" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 1, 0.423529, 0.423529, 1 )
+position = Vector2( -450, -184.167 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 28 )
+
+[node name="LeftBottom" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 1, 0.423529, 0.423529, 1 )
+position = Vector2( -450, -34.1666 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 30 )
+
+[node name="RightTop2" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 1, 0.423529, 0.423529, 1 )
+position = Vector2( -450, 120 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 27 )
+
+[node name="RightBottom2" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 1, 0.423529, 0.423529, 1 )
+position = Vector2( -450, 270 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 29 )
+
+[node name="RightTop" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 0.643137, 0.690196, 1, 1 )
+position = Vector2( 453.333, 120 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 18 )
+
+[node name="RightBottom" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 0.643137, 0.690196, 1, 1 )
+position = Vector2( 453.333, 270 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 25 )
+
+[node name="RightTop3" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 0.643137, 0.690196, 1, 1 )
+position = Vector2( 453.333, -184.167 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 24 )
+
+[node name="RightBottom3" type="Sprite" parent="Tower/Tutorial"]
+modulate = Color( 0.643137, 0.690196, 1, 1 )
+position = Vector2( 453.333, -34.1666 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 26 )
+
+[node name="Player" type="Node2D" parent="." groups=["Players"]]
+position = Vector2( -150, 0 )
+script = ExtResource( 2 )
+
+[node name="CursorSprite" type="Sprite" parent="Player"]
+modulate = Color( 1, 0.556863, 0.556863, 1 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 8 )
+script = ExtResource( 7 )
+
+[node name="Player2" type="Node2D" parent="." groups=["Players"]]
+position = Vector2( 146, 0 )
+script = ExtResource( 10 )
+
+[node name="CursorSprite" type="Sprite" parent="Player2"]
+modulate = Color( 0.521569, 0.588235, 1, 1 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 8 )
+script = ExtResource( 7 )
+
+[node name="BlockManager" parent="." instance=ExtResource( 1 )]
+z_index = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( 0, -200 )
+current = true
+script = ExtResource( 4 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="HeightLabel" type="Label" parent="HUD"]
+anchor_top = 0.402
+anchor_right = 0.578
+anchor_bottom = 0.402
+margin_left = 36.0
+margin_top = -196.0
+margin_right = 35.128
+margin_bottom = -155.0
+custom_fonts/font = SubResource( 2 )
+text = "Placeholder"
+clip_text = true
+script = ExtResource( 19 )
+
+[node name="BlockPreview" type="Panel" parent="HUD"]
+visible = false
+margin_left = 832.0
+margin_top = 76.0
+margin_right = 1003.0
+margin_bottom = 179.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 20 )
+
+[node name="BlockPreviewLabel" type="Label" parent="HUD/BlockPreview"]
+anchor_left = 0.201
+anchor_right = 0.201
+margin_left = -30.0
+margin_top = -37.0
+margin_right = 142.0
+margin_bottom = 1.0
+custom_fonts/font = SubResource( 3 )
+text = "Next block:"
+
+[node name="SpriteContainer" type="Control" parent="HUD/BlockPreview"]
+anchor_left = 0.5
+anchor_top = 0.501839
+anchor_right = 0.5
+anchor_bottom = 0.501839
+rect_scale = Vector2( 0.5, 0.5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TimeLabel" type="Label" parent="HUD"]
+margin_left = 36.0
+margin_top = 89.0
+margin_right = 323.0
+margin_bottom = 130.0
+custom_fonts/font = SubResource( 10 )
+text = "Remaining Time: "
+clip_text = true
+script = ExtResource( 3 )
+
+[node name="PauseMenu" parent="HUD" instance=ExtResource( 22 )]
+
+[node name="GameOverScreen" parent="HUD" instance=ExtResource( 21 )]
+visible = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 200.0
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+
+[node name="HitSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -10.0
+pitch_scale = 1.25
+
+[node name="CheckpointDrawer" type="Node2D" parent="."]
+visible = false
+position = Vector2( 4, -225 )
+script = ExtResource( 13 )
+
+[node name="Background" parent="." instance=ExtResource( 14 )]
+offset = Vector2( 4, 2 )
+transform = Transform2D( 1, 0, 0, 1, 4, 2 )
+
+[node name="ColorRect" parent="Background" index="3"]
+margin_left = -4.0
+margin_top = -2.0
+margin_right = -4.0
+margin_bottom = -2.0
+
+[connection signal="body_entered" from="Tower" to="Tower" method="_on_Tower_body_entered"]
+[connection signal="body_exited" from="Tower" to="Tower" method="_on_Tower_body_exited"]
+[connection signal="checkpoint_reached" from="Player" to="." method="_on_Player_checkpoint_reached"]
+[connection signal="checkpoint_reached" from="Player2" to="." method="_on_Player_checkpoint_reached"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="Background"]

@@ -2,7 +2,7 @@ extends Node
 
 var screen_height
 var block_manager
-var player
+var players = []
 var camera:Camera2D
 var height_label:Label
 var tower:Tower
@@ -19,28 +19,36 @@ var save_file_path = "user://save_game.dat"
 var game_over = false
 signal replay_pressed
 var check_point_drawer
-
+enum GAMEMODE {SINGLEPLAYER, COOP, PVP}
+export(GAMEMODE) var gamemode
 
 func _ready():
 	randomize()
 	screen_height = get_viewport().get_visible_rect().size.y
 	block_types = load_block_types()
 	camera = $Camera2D
-	player = $Player
+	for child in get_children():
+		if child.is_in_group("Players"):
+			players.append(child)
 	height_label = $HUD/HeightLabel
 	block_preview = $HUD/BlockPreview
 	tower = $Tower
-	tower.owning_player = player
+	tower.owning_players.append(players[0])
+	players[0].tower = tower
+	if gamemode == GAMEMODE.COOP:
+		tower.owning_players.append(players[1])
+		players[1].tower = tower
 	time_label = $HUD/TimeLabel
 	timer = $Timer
 	timer.start()
-	player.tower = tower
+	
 	block_manager = $BlockManager
 	GameOverScreen = $HUD/GameOverScreen
 	check_point_drawer = $CheckpointDrawer
 	block_randomizer = BlockRandomizer.new(block_types)
-	while player.upcoming_block_queue.size() < 5:
-		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
+	for player in players:
+		while player.upcoming_block_queue.size() < 5:
+			player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
 	$BackgroundMusic.play(0)
 	GameOverScreen.connect("replay_pressed", self, "_on_replay_pressed")
 
@@ -70,19 +78,20 @@ func save_game():
 		print("Failed to save game")
 
 func _process(_delta):
-	update_camera(player.tower.height)
-	update_player(player.tower.height)
-	update_height_label(player.tower.height)
-	update_time_label()
+	for player in players:
+		update_camera(player.tower.height)
+		update_player(player.tower.height, player)
+		update_height_label(player.tower.height)
+		update_time_label()
+		
+		if (not player.active_block
+				or player.active_block.global_position.y > 1000
+				) and player.block_spawn_cooldown_ready():
+			player.set_active_block(block_manager.spawn_block(player.upcoming_block_queue.pop_front(), player.position))
+			player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
+		update_block_preview(player)
 
-	if (not player.active_block
-			or player.active_block.global_position.y > 1000
-			) and player.block_spawn_cooldown_ready():
-		player.set_active_block(block_manager.spawn_block(player.upcoming_block_queue.pop_front(), player.position))
-		player.upcoming_block_queue.append(block_randomizer.get_block_type_for(player))
-	update_block_preview()
-
-func update_block_preview() -> void:
+func update_block_preview(player) -> void:
 	var temp_instance = player.upcoming_block_queue[0].instance()
 	block_preview.update_preview_block(temp_instance)
 	temp_instance.queue_free()
@@ -97,9 +106,9 @@ func update_time_label() -> void:
 func update_camera(tower_height) -> void:
 	var zoom_value = max(min(1+(tower_height/screen_height)*1.3,3),2)
 	camera.zoom = lerp(camera.zoom, Vector2(zoom_value, zoom_value), 0.05)
-	camera.position.y = lerp(camera.position.y, player.position.y + screen_height*0.4*zoom_value, 0.02)
+	camera.position.y = lerp(camera.position.y, players[0].position.y + screen_height*0.4*zoom_value, 0.02)
 
-func update_player(tower_height) -> void:
+func update_player(tower_height, player) -> void:
 	player.move_to_height(tower_height)
 
 func load_block_types() -> Array:
@@ -118,10 +127,10 @@ func load_block_types() -> Array:
 
 func _on_Player_checkpoint_reached(player_that_reached_checkpoint):
 	add_time()
-	player_that_reached_checkpoint.upcoming_block_queue.insert(0, block_randomizer.get_locker_block_for(player))
+	player_that_reached_checkpoint.upcoming_block_queue.insert(0, block_randomizer.get_locker_block_for(player_that_reached_checkpoint))
 
 func add_time(): 
-	remaining_time += 60
+	remaining_time += 15
 	timer.start(remaining_time)	
 	update_time_label()
 	
@@ -131,11 +140,13 @@ func _on_replay_pressed():
 func _on_Timer_timeout():
 	if not game_over:
 		timer.stop()
-		GameOverScreen.set_height(int(player.tower.height))	
-	if player.tower.height > high_height and not game_over:
-		GameOverScreen.set_highest_height(int(player.tower.height))
-		high_height = int (player.tower.height)
+		GameOverScreen.set_height(int(players[0].tower.height))	
+	if players[0].tower.height > high_height and not game_over:
+		GameOverScreen.set_highest_height(int(players[0].tower.height))
+		high_height = int (players[0].tower.height)
 	save_game()
 	yield(get_tree().create_timer(1.5), "timeout")
 	GameOverScreen.visible = true
+	get_tree().paused = true
 	game_over = true
+	

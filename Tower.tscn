@@ -42,7 +42,7 @@ position = Vector2( 0, -1e+07 )
 shape = SubResource( 4 )
 
 [node name="Checkpoint" type="Sprite" parent="."]
-position = Vector2( -353, -1000 )
+position = Vector2( -365, -800 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, -3 )
 
