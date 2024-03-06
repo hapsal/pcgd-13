@@ -1,9 +1,32 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://sprites/blocks/spirit_level_0.png" type="Texture" id=1]
-[ext_resource path="res://blocks/spirit_level.gd" type="Script" id=2]
 [ext_resource path="res://sprites/blocks/spirit_level_1.png" type="Texture" id=3]
 [ext_resource path="res://sprites/blocks/spirit_level_2.png" type="Texture" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Block
+
+const SIN_PREIOD = 1.0 / (180.0 / PI)
+const BUBBLE_OFFSET_DISTANCE = 32
+const LEVELLING_TORQUE = 2.5
+export(NodePath) var bubble_sprite
+var bubble
+var self_levelling_active = false
+
+func _ready():
+	assert(bubble_sprite)
+	bubble = get_node(bubble_sprite)
+	
+func _physics_process(delta):
+	var offset = -sin(global_rotation_degrees * SIN_PREIOD) * BUBBLE_OFFSET_DISTANCE
+	bubble.offset.x = lerp(bubble.offset.x, offset, 0.2)
+	if not self_levelling_active:
+		if get_colliding_blocks():
+			self_levelling_active = true
+	else:
+		angular_velocity -= (global_rotation_degrees - stepify(global_rotation_degrees, 180)) * LEVELLING_TORQUE * delta
+"
 
 [node name="spirit_level" type="RigidBody2D"]
 mass = 10.0
@@ -12,8 +35,8 @@ contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 angular_damp = 20.0
-script = ExtResource( 2 )
-rarity = 8
+script = SubResource( 1 )
+rarity = 10
 difficulty = 4
 bubble_sprite = NodePath("Sprite1")
 

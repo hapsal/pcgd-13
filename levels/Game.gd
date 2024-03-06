@@ -3,7 +3,8 @@ extends Node
 var screen_height
 var block_manager
 var players = []
-var camera:Camera2D
+var camera
+var camera2
 var height_label:Label
 var tower:Tower
 var block_preview
@@ -21,12 +22,16 @@ signal replay_pressed
 var check_point_drawer
 enum GAMEMODE {SINGLEPLAYER, COOP, PVP}
 export(GAMEMODE) var gamemode
+export(NodePath) var cameraPath
+export(NodePath) var camera2Path
 
 func _ready():
 	randomize()
+	camera = get_node(cameraPath)
+	if camera2Path:
+		camera2 = get_node(camera2Path)
 	screen_height = get_viewport().get_visible_rect().size.y
 	block_types = load_block_types()
-	camera = $Camera2D
 	for child in get_children():
 		if child.is_in_group("Players"):
 			players.append(child)
@@ -38,6 +43,11 @@ func _ready():
 	if gamemode == GAMEMODE.COOP:
 		tower.owning_players.append(players[1])
 		players[1].tower = tower
+	if gamemode == GAMEMODE.PVP:
+		var tower2 = $Tower2
+		players[1].tower = tower2
+		tower2.owning_players.append(players[1])
+		
 	time_label = $HUD/TimeLabel
 	timer = $Timer
 	timer.start()

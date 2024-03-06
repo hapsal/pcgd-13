@@ -14,7 +14,7 @@
 [ext_resource path="res://sfx/hit3.wav" type="AudioStream" id=12]
 [ext_resource path="res://scripts/CheckpointDrawer.gd" type="Script" id=13]
 [ext_resource path="res://Background.tscn" type="PackedScene" id=14]
-[ext_resource path="res://sprites/base.png" type="Texture" id=15]
+[ext_resource path="res://sprites/base_coop.png" type="Texture" id=15]
 [ext_resource path="res://sprites/bee.png" type="Texture" id=16]
 [ext_resource path="res://sprites/checkpoint.png" type="Texture" id=17]
 [ext_resource path="res://sprites/tutorial/UO_rotate.png" type="Texture" id=18]
@@ -78,6 +78,7 @@ font_data = ExtResource( 23 )
 [node name="CoopGame" type="Node"]
 script = ExtResource( 5 )
 gamemode = 1
+cameraPath = NodePath("Camera2D")
 
 [node name="Tower" type="Area2D" parent="."]
 collision_layer = 0
@@ -86,10 +87,11 @@ script = ExtResource( 9 )
 
 [node name="TowerArea" type="CollisionShape2D" parent="Tower"]
 position = Vector2( 0, -1e+07 )
+scale = Vector2( 1.25, 1 )
 shape = SubResource( 4 )
 
 [node name="Checkpoint" type="Sprite" parent="Tower"]
-position = Vector2( -353, -1000 )
+position = Vector2( -353, -750 )
 texture = ExtResource( 17 )
 offset = Vector2( 0, -3 )
 
@@ -98,9 +100,11 @@ physics_material_override = SubResource( 5 )
 script = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tower/Base"]
+scale = Vector2( 1.5, 1 )
 shape = SubResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="Tower/Base"]
+scale = Vector2( 1.5, 1 )
 texture = ExtResource( 15 )
 
 [node name="Bee" type="AnimatedSprite" parent="Tower"]

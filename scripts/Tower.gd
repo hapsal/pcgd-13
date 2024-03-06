@@ -72,8 +72,10 @@ func get_peak() -> Vector2:
 	return highest_peak_found
 
 func update_checkpoint_height(checkpoint_number):
-	checkpoint.position.y -= 500 + 200 * checkpoint_number
-
+	if get_parent().gamemode == 1:
+		checkpoint.position.y -= 700 + 300 * checkpoint_number
+	else:
+		checkpoint.position.y -= 500 + 200 * checkpoint_number
 func _on_Tower_body_entered(body):
 	if body is Block and not blocks_in_tower.has(body):
 		blocks_in_tower.append(body)
